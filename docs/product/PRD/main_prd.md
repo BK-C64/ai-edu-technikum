@@ -2,39 +2,6 @@
 
 Poniżej znajduje się lista propozycji funkcjonalności, z których możemy wybrać zestaw na najbliższe 8 lekcji, a także zaplanować dalszy rozwój produktu.
 
-### I. Fundamenty i Interfejs Użytkownika (Lekcja 1-2)
-1.  **Główny layout aplikacji:** Statyczna struktura z podziałem na trzy kolumny: serwery/kanały, okno czatu, lista użytkowników.
-2.  **Wyświetlanie listy kanałów:** Dynamiczne pobieranie i wyświetlanie listy dostępnych kanałów publicznych z serwera.
-3.  **Przełączanie widoku między kanałami:** Kliknięcie na kanał powoduje zmianę kontekstu okna czatu.
-4.  **Prosty motyw graficzny:** Domyślny wygląd aplikacji (np. jasny lub ciemny motyw bez możliwości zmiany).
-
-### II. Rdzeń Komunikacji (Lekcja 2-4)
-5.  **Wysyłanie i odbieranie wiadomości na kanale publicznym:** Podstawowa komunikacja w czasie rzeczywistym.
-6.  **Wyświetlanie historii wiadomości:** Po wejściu na kanał użytkownik widzi poprzednie wiadomości.
-7.  **Tożsamość nadawcy:** Każda wiadomość jest podpisana nazwą użytkownika i opatrzona znacznikiem czasu.
-8.  **Rozmowy prywatne (1-na-1):** Możliwość otwarcia bezpośredniej konwersacji z użytkownikiem z listy.
-9.  **Wskaźnik "ktoś pisze...":** Informacja zwrotna dla użytkowników, że ich rozmówca jest w trakcie pisania wiadomości.
-
-### III. Zarządzanie Użytkownikiem (Lekcja 5)
-10. **Rejestracja i logowanie:** Stworzenie systemu uwierzytelniania, aby użytkownicy mieli stałe konta.
-11. **Utrzymywanie sesji:** Aplikacja "pamięta" zalogowanego użytkownika po odświeżeniu strony.
-12. **Status online/offline:** Prosta informacja o tym, którzy użytkownicy są aktualnie aktywni.
-13. **Podstawowy profil użytkownika:** Możliwość ustawienia własnego awatara.
-
-### IV. Wzbogacanie Interakcji (Lekcja 6-7)
-14. **Reakcje emoji na wiadomości:** Możliwość dodawania prostych reakcji (np. 👍, ❤️) do postów innych.
-15. **Edycja własnych wiadomości:** Funkcja pozwalająca na poprawienie wysłanej przez siebie wiadomości.
-16. **Usuwanie własnych wiadomości:** Możliwość usunięcia swojej wiadomości z czatu.
-17. **Wątki (Threads):** Odpowiadanie na konkretną wiadomość w osobnym, zagnieżdżonym widoku, aby nie zakłócać głównej rozmowy.
-
-### V. Funkcje Użyteczności i Zaawansowane (Lekcja 8+)
-18. **Wyszukiwanie użytkowników:** Prosta wyszukiwarka pozwalająca znaleźć konkretną osobę i rozpocząć rozmowę.
-19. **Wyszukiwanie wiadomości:** Wyszukiwarka tekstowa wewnątrz aktywnego kanału lub rozmowy prywatnej.
-20. **Powiadomienia w przeglądarce:** Notyfikacje o nowych wiadomościach, gdy aplikacja nie jest aktywna.
-21. **Udostępnianie obrazków:** Możliwość wysłania pliku graficznego, który wyświetli się bezpośrednio w oknie czatu.
-22. **Oznaczanie użytkowników (@mentions):** Możliwość "zawołania" konkretnego użytkownika na kanale, co może generować dla niego specjalne powiadomienie.
-
----
 
 ## Plan Rozwoju Aplikacji na 8 Lekcji (Opis Funkcjonalny i User Stories)
 
