@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRC Client</title>
+    <style>
+        :root {
+            --background-primary: #23272A; /* Dark grey, almost black */
+            --background-secondary: #2C2F33; /* Slightly lighter grey for elements */
+            --background-tertiary: #36393f; /* Even lighter for interactive elements or highlights */
+            --text-primary: #FFFFFF;
+            --text-secondary: #b9bbbe; /* Lighter grey for secondary text */
+            --text-link: #7289DA; /* Discord blurple or a similar accent */
+            --accent-color: #7289DA;
+            --accent-color-hover: #677bc4;
+            --my-message-bg: #4f545c; /* Darker shade for my messages */
+            --other-message-bg: var(--background-secondary);
+            --success-color: #43b581; /* Green */
+            --error-color: #f04747; /* Red */
+            --info-color: var(--accent-color);
+            --input-background: #40444b;
+            --border-color: #4c5058;
+            --font-family: 'gg sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Similar to Discord's font stack */
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0; padding: 15px; 
+            background-color: var(--background-primary);
+            color: var(--text-primary);
+            display: flex; flex-direction: column; align-items: center; 
+            height: calc(100vh - 30px); /* Adjusted for reduced padding */
+            font-size: 14px; /* Slightly smaller base font */
+        }
+        .container {
+            background-color: var(--background-secondary);
+            padding: 15px; border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            width: 100%; max-width: 950px; /* Slightly wider */
+            display: flex; flex-direction: column; 
+            height: 100%; box-sizing: border-box;
+        }
+        
+        h1, h2, h3 { color: var(--text-primary); margin-top: 0; margin-bottom: 10px; font-weight: 500;}
+        h1 { font-size: 1.8em; text-align: center; margin-bottom: 15px;}
+        h2 { font-size: 1.4em; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
+        h3 { font-size: 1.1em; }
+
+        .login-section { margin-bottom: 20px; padding: 15px; background-color: var(--background-tertiary); border-radius: 5px; }
+        
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px); padding: 8px 10px; margin-bottom: 8px; 
+            border: 1px solid var(--border-color);
+            background-color: var(--input-background);
+            color: var(--text-primary);
+            border-radius: 3px; font-size: 0.95em;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        button {
+            padding: 8px 12px; border: none; 
+            background-color: var(--accent-color);
+            color: white; border-radius: 3px; cursor: pointer; font-size: 0.95em; font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        button:hover { background-color: var(--accent-color-hover); }
+        button:disabled { background-color: var(--background-tertiary); color: var(--text-secondary); cursor: not-allowed; }
+
+        .chat-section { display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
+        .chat-main-area { display: flex; flex-grow: 1; overflow: hidden; margin-bottom: 8px; }
+
+        #chatBoxContainer {
+            flex-grow: 1; display: flex; flex-direction: column; 
+            margin-right: 15px; overflow: hidden; 
+            background-color: var(--background-primary); border-radius: 5px; padding: 2px; /* Add padding for internal scrollbar */
+        }
+        #chatBox {
+            height: 100%; 
+            overflow-y: scroll; padding: 8px; 
+            flex-grow: 1;
+        }
+        /* Custom scrollbar for chatbox */
+        #chatBox::-webkit-scrollbar { width: 8px; }
+        #chatBox::-webkit-scrollbar-track { background: var(--background-secondary); border-radius: 4px; }
+        #chatBox::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
+        #chatBox::-webkit-scrollbar-thumb:hover { background: var(--accent-color-hover); }
+
+        #userListArea {
+            width: 180px; /* Slightly narrower */
+            display: flex; flex-direction: column; 
+            background-color: var(--background-primary);
+            border-radius: 5px; padding:10px; 
+            overflow: hidden; 
+        }
+        #userListArea h3 { margin-bottom: 8px; font-size: 1.05em; }
+        #userList {
+            overflow-y: auto; flex-grow: 1; font-size: 0.9em;
+        }
+        #userList ul { list-style-type: none; padding: 0; margin: 0; }
+        #userList li { padding: 2px 0; color: var(--text-secondary); text-align: left; }
+        #userList li[style*="bold"] { color: var(--text-primary); }
+
+        #userList::-webkit-scrollbar { width: 6px; }
+        #userList::-webkit-scrollbar-track { background: var(--background-secondary); border-radius: 3px; }
+        #userList::-webkit-scrollbar-thumb { background: var(--text-link); border-radius: 3px; }
+
+        #messageInputContainer {
+            display: flex; flex-shrink: 0; padding-top: 8px; border-top: 1px solid var(--border-color);
+        }
+        #messageInputContainer input[type="text"] {
+            flex-grow: 1; margin-right: 8px; margin-bottom: 0;
+        }
+
+        .message { 
+            margin-bottom: 6px; padding: 6px 10px; border-radius: 15px; /* More rounded */
+            max-width: 85%; word-wrap: break-word; text-align: left !important; 
+            line-height: 1.3;
+            font-size: 0.95em;
+        }
+        .message .username { 
+            font-weight: 500; display: block; margin-bottom: 2px; font-size: 0.85em;
+        }
+        .message .timestamp { 
+            font-size: 0.7em; color: var(--text-secondary); 
+            display: block; margin-top: 3px;
+        }
+        
+        .user-event { 
+            font-style: normal; color: var(--text-secondary); text-align: center !important; 
+            margin: 6px 0; background: none; border: none; font-size: 0.85em;
+        }
+        
+        .server-message { 
+            background-color: var(--other-message-bg); 
+            border: 1px solid var(--border-color);
+            align-self: flex-start; 
+        }
+        .my-message { 
+            background-color: var(--my-message-bg); 
+            border: 1px solid #3e4147;
+            margin-left: auto; 
+        }
+        .my-message .username { color: var(--accent-color); }
+        .server-message .username { color: var(--text-link); }
+        
+        #status {
+            padding: 8px; margin-top:10px; border-radius: 4px; 
+            text-align: center; font-weight: 500; flex-shrink: 0; font-size: 0.9em;
+        }
+        .status-error { background-color: var(--error-color); color: var(--text-primary); border: none;}
+        .status-success { background-color: var(--success-color); color: var(--text-primary); border: none;}
+        .status-info { background-color: var(--info-color); color: var(--text-primary); border: none;}
+
+        .hidden { display: none !important; }
+
+        /* Attempt to load external font */
+        @font-face {
+            font-family: 'gg sans';
+            src: url('https://discord.com/assets/fonts/ggsans-Medium.woff2') format('woff2');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'gg sans';
+            src: url('https://discord.com/assets/fonts/ggsans-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+         @font-face {
+            font-family: 'gg sans';
+            src: url('https://discord.com/assets/fonts/ggsans-Bold.woff2') format('woff2');
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IRC Client</h1>
+
+        <div id="loginSection" class="login-section">
+            <h2>Login to Chat</h2>
+            <input type="text" id="serverAddress" value="ws://3.122.247.227:8000/ws" placeholder="Server Address (ws://localhost:8000/ws)">
+            <input type="password" id="serverPassword" placeholder="Server Password">
+            <input type="text" id="username" placeholder="Your Nickname">
+            <button id="connectButton">Connect</button>
+        </div>
+
+        <div id="chatSection" class="chat-section hidden">
+            <div class="chat-main-area">
+                <div id="chatBoxContainer">
+                    <div id="chatBox"></div>
+                </div>
+                <div id="userListArea">
+                    <h3>Users Online</h3>
+                    <div id="userList"><ul></ul></div>
+                </div>
+            </div>
+            <div id="messageInputContainer">
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+        <div id="status">Enter server details and connect.</div>
+    </div>
+
+    <script>
+        const serverAddressInput = document.getElementById('serverAddress');
+        const serverPasswordInput = document.getElementById('serverPassword');
+        const usernameInput = document.getElementById('username');
+        const connectButton = document.getElementById('connectButton');
+        
+        const loginSection = document.getElementById('loginSection');
+        const chatSection = document.getElementById('chatSection');
+        
+        const chatBox = document.getElementById('chatBox');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const userListUl = document.querySelector('#userList ul');
+        const statusDiv = document.getElementById('status');
+
+        let websocket = null;
+        let myUsername = '';
+
+        function showStatus(message, type = 'info') {
+            statusDiv.textContent = message;
+            statusDiv.className = ''; // Reset classes
+            if (type === 'error') {
+                statusDiv.classList.add('status-error');
+            } else if (type === 'success') {
+                statusDiv.classList.add('status-success');
+            } else {
+                statusDiv.classList.add('status-info');
+            }
+        }
+
+        function appendMessage(user, text, timestamp, messageType = 'server') {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            
+            let userDisplay = user ? `<span class="username">${escapeHtml(user)}</span>` : '';
+            if (messageType === 'user-event') {
+                 messageElement.classList.add('user-event');
+                 userDisplay = ''; 
+            } else if (user === myUsername) {
+                messageElement.classList.add('my-message');
+            } else {
+                messageElement.classList.add('server-message');
+            }
+            
+            const timeStr = timestamp ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+            
+            let messageContent = '';
+            if(userDisplay) messageContent += userDisplay;
+            messageContent += `<div class="message-text">${escapeHtml(text)}</div>`;
+            if(timeStr) messageContent += `<span class="timestamp">${timeStr}</span>`;
+            
+            messageElement.innerHTML = messageContent;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight; 
+        }
+        
+        function escapeHtml(unsafe) {
+            if (unsafe === null || typeof unsafe === 'undefined') return '';
+            return unsafe
+                 .toString()
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        function updateUserList(users) {
+            userListUl.innerHTML = ''; 
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = escapeHtml(user);
+                if (user === myUsername) {
+                    li.style.fontWeight = '700';
+                    li.style.color = 'var(--text-primary)';
+                }
+                userListUl.appendChild(li);
+            });
+        }
+
+        function connectToServer() {
+            const serverUrl = serverAddressInput.value.trim();
+            const password = serverPasswordInput.value;
+            const username = usernameInput.value.trim();
+
+            if (!serverUrl || !password || !username) {
+                showStatus('Server address, password, and nickname are required.', 'error');
+                return;
+            }
+            if (username.length < 3 || username.length > 20) {
+                showStatus('Nickname must be between 3 and 20 characters.', 'error');
+                return;
+            }
+            
+            myUsername = username; 
+
+            showStatus('Connecting...', 'info');
+            connectButton.disabled = true;
+
+            websocket = new WebSocket(serverUrl);
+
+            websocket.onopen = () => {
+                showStatus('Connected. Authenticating password...', 'info');
+                websocket.send(JSON.stringify({
+                    type: 'auth_password',
+                    payload: { password: password }
+                }));
+                
+                const localUsername = usernameInput.value.trim();
+                if (websocket && websocket.readyState === WebSocket.OPEN) {
+                    showStatus('Authenticating username...', 'info');
+                    websocket.send(JSON.stringify({
+                        type: 'auth_username',
+                        payload: { username: localUsername }
+                    }));
+                } else {
+                    console.warn("WebSocket not open when trying to send username immediately after password");
+                }
+            };
+
+            websocket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log("Received:", data);
+
+                switch (data.type) {
+                    case 'auth_error':
+                        showStatus(`Auth Error: ${escapeHtml(data.payload.reason)}. Try again.`, 'error');
+                        if(websocket) websocket.close(); 
+                        connectButton.disabled = false;
+                        break;
+                    case 'chat_history':
+                        showStatus('Connected & Authenticated!', 'success');
+                        chatBox.innerHTML = ''; 
+                        data.payload.messages.forEach(msg => {
+                            appendMessage(msg.username, msg.text, msg.timestamp);
+                        });
+                        loginSection.classList.add('hidden');
+                        chatSection.classList.remove('hidden');
+                        messageInput.focus();
+                        break;
+                    case 'user_list':
+                        updateUserList(data.payload.users);
+                        break;
+                    case 'new_message':
+                        appendMessage(data.payload.username, data.payload.text, data.payload.timestamp);
+                        break;
+                    case 'user_joined':
+                        appendMessage(null, `${escapeHtml(data.payload.username)} joined.`, data.payload.timestamp, 'user-event');
+                        break;
+                    case 'user_left':
+                        appendMessage(null, `${escapeHtml(data.payload.username)} left.`, data.payload.timestamp, 'user-event');
+                        break;
+                    case 'error': 
+                        showStatus(`Server: ${escapeHtml(data.payload.message)}`, 'error');
+                        break;
+                    default:
+                        console.warn("Received unknown message type:", data.type);
+                }
+            };
+
+            websocket.onerror = (error) => {
+                console.error('WebSocket Error:', error);
+                showStatus('Connection error. Is server running? Check address.', 'error');
+                connectButton.disabled = false;
+            };
+
+            websocket.onclose = () => {
+                showStatus('Disconnected.', 'info');
+                connectButton.disabled = false;
+                if (!chatSection.classList.contains('hidden')) {
+                     showStatus('Disconnected. You can try reconnecting.', 'error');
+                }
+            };
+        }
+
+        function sendMessage() {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                const messageText = messageInput.value.trim();
+                if (messageText) {
+                    websocket.send(JSON.stringify({
+                        type: 'new_message',
+                        payload: { text: messageText }
+                    }));
+                    messageInput.value = '';
+                }
+            } else {
+                showStatus('Not connected.', 'error');
+            }
+        }
+
+        connectButton.addEventListener('click', connectToServer);
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        serverAddressInput.value = 'ws://localhost:8000/ws';
+        serverPasswordInput.value = 'ircAMP2024!'; 
+        usernameInput.value = 'User' + Math.floor(Math.random() * 900 + 100);
+
+    </script>
+</body>
+</html>

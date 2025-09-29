@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Team Chat - Logowanie</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page-body">
+
+    <!-- Ekran logowania -->
+    <div id="login-screen">
+        <div class="login-form">
+            <h2 class="login-title">Witaj w AI Team Chat</h2>
+            <p class="login-subtitle">Zaloguj się, aby kontynuować</p>
+            <div class="input-group">
+                <label for="username-input">Nazwa użytkownika</label>
+                <input type="text" id="username-input" placeholder="np. JanKowalski" maxlength="20">
+            </div>
+            <div class="input-group">
+                 <label for="password-input">Hasło</label>
+                <input type="password" id="password-input" placeholder="••••••••••••">
+            </div>
+            <button id="login-button">Zaloguj się</button>
+            <div id="login-error" class="error-message"></div>
+        </div>
+    </div>
+
+</body>
+</html>
