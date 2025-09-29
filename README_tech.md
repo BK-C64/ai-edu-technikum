@@ -49,23 +49,23 @@ Projekt jest tworzony przy intensywnym wsparciu sztucznej inteligencji, która p
 
 Nasz przepływ pracy (workflow) z AI można opisać następująco, przypisując do AI role z tradycyjnego zespołu deweloperskiego. Szczegółowe, polskojęzyczne definicje poszczególnych agentów znajdują się w katalogu `docs/agents/`.
 
-- **AI jako [Product Manager](docs/agents/product-manager_pl.md):**
+- **AI jako [Product Manager](agents/product-manager_pl.md):**
     - **Zadanie:** Definiowanie wymagań i historyjek użytkownika (User Stories).
     - **Proces:** Na podstawie ogólnych założeń i celów biznesowych, AI pomaga w precyz-yjnym formułowaniu historyjek użytkownika i kryteriów akceptacji.
 
-- **AI jako [UX Designer](docs/agents/ux-designer_pl.md):**
+- **AI jako [UX Designer](agents/ux-designer_pl.md):**
     - **Zadanie:** Projektowanie doświadczeń użytkownika i interfejsu.
     - **Proces:** AI wspiera w tworzeniu makiet (wireframes), prototypów oraz w projektowaniu intuicyjnego i estetycznego interfejsu użytkownika, bazując na najlepszych praktykach UX.
 
-- **AI jako [Architekt Oprogramowania](docs/agents/solution-architect_pl.md):**
+- **AI jako [Architekt Oprogramowania](agents/solution-architect_pl.md):**
     - **Zadanie:** Projektowanie architektury dla poszczególnych etapów.
     - **Proces:** AI wspiera w podejmowaniu decyzji architektonicznych, sugerując odpowiednie technologie, wzorce projektowe oraz strukturę systemu.
 
-- **AI jako [Tech Lead](docs/agents/tech-lead-task-planner_pl.md):**
+- **AI jako [Tech Lead](agents/tech-lead-task-planner_pl.md):**
     - **Zadanie:** Planowanie kroków implementacyjnych.
     - **Proces:** AI pomaga w ustalaniu kolejności implementacji zadań, identyfikowaniu zależności oraz w podziale pracy na konkretne kroki (np. "co i gdzie należy zaimplementować").
 
-- **AI jako [Deweloper](docs/agents/software-developer_pl.md):**
+- **AI jako [Deweloper](agents/software-developer_pl.md):**
     - **Zadanie:** Pisanie kodu.
     - **Proces:** AI generuje kod, dokonuje refaktoryzacji, pisze testy i pomaga w debugowaniu, stanowiąc główną siłę wykonawczą w procesie tworzenia oprogramowania.
 

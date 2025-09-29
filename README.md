@@ -33,15 +33,15 @@ Wyobraź sobie, że mamy mały zespół ekspertów, którzy pomagają nam na ka�
 
 Oto nasz "zespół":
 
--   **[Product Manager](docs/agents/product-manager_pl.md) (Szef Produktu):** Ustala, **CO** mamy zbudować. To on tworzy listę funkcji i historyjki użytkownika, np. "Użytkownik powinien móc wysłać wiadomość".
+-   **[Product Manager](agents/product-manager_pl.md) (Szef Produktu):** Ustala, **CO** mamy zbudować. To on tworzy listę funkcji i historyjki użytkownika, np. "Użytkownik powinien móc wysłać wiadomość".
 
--   **[UX Designer](docs/agents/ux-designer_pl.md) (Projektant Wyglądu):** Projektuje, **JAK** aplikacja ma wyglądać. Tworzy wizualne makiety (jak te w katalogu `docs/product/design_ux/`), abyśmy wiedzieli, do jakiego efektu dążymy.
+-   **[UX Designer](agents/ux-designer_pl.md) (Projektant Wyglądu):** Projektuje, **JAK** aplikacja ma wyglądać. Tworzy wizualne makiety (jak te w katalogu `docs/product/design_ux/`), abyśmy wiedzieli, do jakiego efektu dążymy.
 
--   **[Architekt](docs/agents/solution-architect_pl.md) (Główny Inżynier):** Planuje, **JAK** zbudować aplikację od strony technicznej. Tworzy "mapy" i "schematy" (jak `api_design.md` czy `database_schema.md`), żeby wszystko do siebie pasowało.
+-   **[Architekt](agents/solution-architect_pl.md) (Główny Inżynier):** Planuje, **JAK** zbudować aplikację od strony technicznej. Tworzy "mapy" i "schematy" (jak `api_design.md` czy `database_schema.md`), żeby wszystko do siebie pasowało.
 
--   **[Tech Lead](docs/agents/tech-lead-task-planner_pl.md) (Lider Zespołu Technicznego):** Rozbija plany Architekta na małe, konkretne zadania do wykonania. Tworzy dla nas checklisty, np. "Stwórz plik `main.js`".
+-   **[Tech Lead](agents/tech-lead-task-planner_pl.md) (Lider Zespołu Technicznego):** Rozbija plany Architekta na małe, konkretne zadania do wykonania. Tworzy dla nas checklisty, np. "Stwórz plik `main.js`".
 
--   **[Deweloper](docs/agents/software-developer_pl.md) (Programista):** To główny wykonawca – czyli **Ty i ja!** Bierzemy zadania od Tech Leada i piszemy kod, który sprawia, że aplikacja zaczyna działać.
+-   **[Deweloper](agents/software-developer_pl.md) (Programista):** To główny wykonawca – czyli **Ty i ja!** Bierzemy zadania od Tech Leada i piszemy kod, który sprawia, że aplikacja zaczyna działać.
 
 ## 4. Co dalej?
 
