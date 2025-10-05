@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Team Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f9520b9b7f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Ekran logowania -->
+    <div id="login-screen" data-view="login">
+        <div class="login-form">
+            <h2 class="login-title">Witaj w AI Team Chat</h2>
+            <p class="login-subtitle">Zaloguj się, aby kontynuować</p>
+            <div class="input-group">
+                <label for="username-input">Nazwa użytkownika</label>
+                <input type="text" id="username-input" placeholder="np. JanKowalski" maxlength="20">
+            </div>
+            <div class="input-group">
+                 <label for="password-input">Hasło</label>
+                <input type="password" id="password-input" placeholder="••••••••••••">
+            </div>
+            <button id="login-button">Zaloguj się</button>
+            <div id="login-error" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Główny interfejs aplikacji -->
+    <div id="app-wrapper" data-view="app" class="hidden">
+
+        <!-- Sidebar z kanałami i wiadomościami prywatnymi -->
+        <aside id="channel-sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile-widget">
+                     <img src="https://placehold.co/40x40/E6D1F2/4F378B?text=BK" alt="User Avatar" class="avatar">
+                     <div class="user-details">
+                        <span class="username">Błażej Kazek</span>
+                        <span class="status">Online</span>
+                     </div>
+                     <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="channels-section">
+                    <h3><i class="fa-solid fa-hashtag"></i> Kanały</h3>
+                    <ul id="channels-list">
+                        <li class="channel-item active" data-channel-id="general">
+                            <span>Ogólny</span>
+                        </li>
+                        <li class="channel-item" data-channel-id="random">
+                            <span>Luźne tematy</span>
+                        </li>
+                         <li class="channel-item" data-channel-id="projekt-x">
+                            <span>Projekt X</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-section">
+                    <h3><i class="fa-solid fa-user-group"></i> Wiadomości prywatne</h3>
+                    <ul id="dm-list">
+                        <li class="dm-item" data-user-id="user1">
+                            <img src="https://placehold.co/32x32/FFC8DD/C4376D?text=AS" alt="Ann avatar" class="avatar">
+                            <span>Ann Schleifer</span>
+                            <span class="unread-badge">2</span>
+                        </li>
+                         <li class="dm-item" data-user-id="user2">
+                            <img src="https://placehold.co/32x32/A2D2FF/1E6A9C?text=AW" alt="Alfredo avatar" class="avatar">
+                            <span>Alfredo Workman</span>
+                        </li>
+                         <li class="dm-item" data-user-id="user3">
+                            <img src="https://placehold.co/32x32/BDE0FE/2A85C4?text=KG" alt="Kianna avatar" class="avatar">
+                            <span>Kianna George</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Główne okno czatu -->
+        <main id="chat-container">
+            <header id="chat-header">
+                 <img src="https://placehold.co/40x40/FFC8DD/C4376D?text=AS" alt="Ann avatar" class="avatar">
+                 <div class="channel-info">
+                    <span class="channel-name">Ann Schleifer</span>
+                    <span class="channel-topic">Online</span>
+                 </div>
+                 <div class="header-actions">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                 </div>
+            </header>
+            
+            <div id="messages-container">
+                <div class="date-divider"><span>Dzisiaj</span></div>
+
+                <div class="message incoming">
+                    <img src="https://placehold.co/40x40/FFC8DD/C4376D?text=AS" alt="Ann avatar" class="avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <div class="message-author">Ann Schleifer</div>
+                            <div class="message-text">Cześć, widziałeś, że Taco ogłosił nową trasę? Wpada do nas do Wrocławia w listopadzie.</div>
+                        </div>
+                        <div class="message-timestamp">11:05</div>
+                    </div>
+                </div>
+
+                <div class="message outgoing">
+                     <div class="message-content">
+                        <div class="message-bubble">
+                             <div class="message-author">Błażej Kazek</div>
+                             <div class="message-text">O, serio? Nie słyszałem. No jasne, że idziemy! Bilety są już w sprzedaży?</div>
+                        </div>
+                        <div class="message-timestamp">11:06 <i class="fa-solid fa-check-double"></i></div>
+                    </div>
+                </div>
+                
+                 <div class="message incoming">
+                    <img src="https://placehold.co/40x40/FFC8DD/C4376D?text=AS" alt="Ann avatar" class="avatar">
+                    <div class="message-content">
+                        <div class="message-bubble">
+                             <div class="message-author">Ann Schleifer</div>
+                             <div class="message-text">Tak, ruszyły dzisiaj rano. Ogarniesz zakup po lekcjach?</div>
+                        </div>
+                        <div class="message-timestamp">11:07</div>
+                    </div>
+                </div>
+                
+                 <div class="message outgoing">
+                     <div class="message-content">
+                        <div class="message-bubble">
+                             <div class="message-author">Błażej Kazek</div>
+                             <div class="message-text">Spoko, będę pamiętał.</div>
+                        </div>
+                        <div class="message-timestamp">11:08 <i class="fa-solid fa-check"></i></div>
+                    </div>
+                </div>
+
+                <!-- Wskaźnik pisania -->
+                <div class="typing-indicator-container">
+                    <div class="message incoming typing-indicator">
+                        <img src="https://placehold.co/40x40/FFC8DD/C4376D?text=AS" alt="Ann avatar" class="avatar">
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <div class="typing-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            
+            <div id="message-input-area">
+                <i class="fa-regular fa-face-smile"></i>
+                <input type="text" id="message-input" placeholder="Napisz wiadomość...">
+                <button id="send-button"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </main>
+
+        <!-- Sidebar z listą użytkowników -->
+        <aside id="user-sidebar">
+            <div class="sidebar-header">
+                <h3>Użytkownicy Online (<span id="user-count">4</span>)</h3>
+            </div>
+            <div class="sidebar-content">
+                <div class="user-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Wyszukaj...">
+                </div>
+                <ul id="users-list">
+                    <li class="user-item">
+                        <img src="https://placehold.co/32x32/E6D1F2/4F378B?text=BK" alt="Błażej Kazek" class="avatar">
+                        <div class="user-details">
+                            <span class="username">Błażej Kazek (Ty)</span>
+                            <span class="user-status online">Online</span>
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <img src="https://placehold.co/32x32/FFC8DD/C4376D?text=AS" alt="Ann Schleifer" class="avatar">
+                        <div class="user-details">
+                            <span class="username">Ann Schleifer</span>
+                            <span class="user-status online">Online</span>
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <img src="https://placehold.co/32x32/A2D2FF/1E6A9C?text=AW" alt="Alfredo Workman" class="avatar">
+                         <div class="user-details">
+                            <span class="username">Alfredo Workman</span>
+                            <span class="user-status online">Online</span>
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <img src="https://placehold.co/32x32/BDE0FE/2A85C4?text=KG" alt="Kianna George" class="avatar">
+                         <div class="user-details">
+                            <span class="username">Kianna George</span>
+                            <span class="user-status offline">Offline</span>
+                        </div>
+                    </li>
+                     <li class="user-item">
+                        <img src="https://placehold.co/32x32/CDB4DB/5A3E8A?text=CC" alt="Craig Culhane" class="avatar">
+                         <div class="user-details">
+                            <span class="username">Craig Culhane</span>
+                            <span class="user-status offline">Offline</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+</html>

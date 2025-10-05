@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#game-container {
+    position: relative;
+    width: 800px; /* Szerokość obszaru gry */
+    height: 600px; /* Wysokość obszaru gry */
+    border: 2px solid #ccc;
+    background-color: #e0e0e0;
+    overflow: hidden;
+}
+
+#car {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: #6495ED; /* Jasnoniebieski */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    border: 1px solid #333;
+}
+
+.window {
+    position: absolute;
+    background-color: #000; /* Czarny */
+    height: 15px;
+    width: 30px;
+}
+
+.front-window {
+    top: 5px;
+    left: 10px;
+}
+
+.rear-window {
+    top: 5px;
+    right: 10px;
+}
+
+.light {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+}
+
+.front-light {
+    background-color: yellow;
+    top: 20px;
+}
+
+.left-light {
+    left: -5px;
+}
+
+.right-light {
+    right: -5px;
+}
+
+.rear-light {
+    background-color: red;
+    top: 20px;
+}
+
+#dashboard {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
