@@ -1,0 +1,24 @@
+CHcialbym stworzyc wygania funkcjonalne dla prostej wersji prototypu gry minecraft 2d. Gra miala by przypominac mario brothers. Moglbys pomoc mi ulozyc user stories do pliku @/project/lekcja_3/minecraft_2f_wymagania.md
+
+
+Skupmy się na niszczeniu i budowaniu bloków.
+
+
+ok, wyglada niezle. Ulozymy teraz wymagania niefunkcjonalne do tego zadania. Daj wyniki do @/project/lekcja_3/minecraft_2d_niefunkcjonalne.md oraz uzyj zasad podobnych do @/project/lekcja_2/plan_projektu/wymagania_niefunkcjonalne.md
+
+
+ok, wyglada niezle. Ulozymy teraz wymagania niefunkcjonalne do tego zadania. Daj wyniki do @/project/lekcja_3/minecraft_2d_niefunkcjonalne.md oraz uzyj zasad podobnych do @/project/lekcja_2/plan_projektu/wymagania_niefunkcjonalne.md
+
+
+ok, nastepnie przejdziemy do ulozenia architektury rozwiazania. Zaproponuj jak powinien byc ulozony kod (jakie obiekty, w jakiej strukturze katalogow, etc..). zastosuj zasady z @/agents/solution-architect_pl.md
+
+
+sprawdz czy zaproponowany @/project/lekcja_3/design.md jest poprawny , nanies zmiany jezeli cos potrzeba zmienic
+
+
+ok, teraz uzyj @/agents/tech-lead-task-planner_pl.md i zaproponuj kolejnosc implementacji
+
+
+ok, pamietaj zeby uzyc wytycznych @/agents/software-developer_pl.md do realizacji tego planu z @/project/lekcja_3/tasks.md
+
+
