@@ -1,0 +1,4 @@
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+const BLOCK_SIZE = 40;
+const GRAVITY = 0.5;
