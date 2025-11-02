@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="servers-list">
+            <div class="server-icon active">S1</div>
+            <div class="server-icon">S2</div>
+            <div class="server-icon">S3</div>
+            <div class="server-icon add-server">+</div>
+        </div>
+        <div class="channels-list">
+            <div class="server-name">Nazwa Serwera</div>
+            <ul class="channels">
+                <li class="channel-category">Kanały tekstowe</li>
+                <li class="channel active"># ogólny</li>
+                <li class="channel"># witamy</li>
+                <li class="channel"># zasady</li>
+                <li class="channel-category">Kanały głosowe</li>
+                <li class="channel">Głosowy 1</li>
+                <li class="channel">Głosowy 2</li>
+            </ul>
+            <div class="user-panel">
+                <div class="user-info">
+                    <div class="avatar"></div>
+                    <span class="username">Użytkownik</span>
+                </div>
+                <div class="user-controls">
+                    <span>🎤</span>
+                    <span>🎧</span>
+                    <span>⚙️</span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-window">
+            <div class="chat-header">
+                <h3># ogólny</h3>
+            </div>
+            <div class="chat-messages">
+                <div class="message">
+                    <div class="avatar"></div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="username">Kolega</span>
+                            <span class="timestamp">Dzisiaj o 14:20</span>
+                        </div>
+                        <div class="message-text">Cześć wszystkim!</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar"></div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="username">Użytkownik</span>
+                            <span class="timestamp">Dzisiaj o 14:21</span>
+                        </div>
+                        <div class="message-text">Hej! Co tam?</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Napisz na #ogólny">
+            </div>
+        </div>
+        <div class="users-list">
+            <div class="user-list-header">Użytkownicy</div>
+            <ul>
+                <li class="user-list-category">Online - 2</li>
+                <li class="user">Użytkownik</li>
+                <li class="user">Kolega</li>
+                <li class="user-list-category">Offline - 1</li>
+                <li class="user offline">Inny Użytkownik</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

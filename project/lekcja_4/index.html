@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototyp Discord</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>Witaj ponownie!</h2>
+            <p>Cieszymy się, że znowu jesteś!</p>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">E-MAIL</label>
+                    <input type="email" id="email" value="user@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">HASŁO</label>
+                    <input type="password" id="password" value="password" required>
+                </div>
+                <button type="submit">Zaloguj się</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container" style="display: none;">
+        <!-- Kolumna 1: Serwery -->
+        <nav class="servers-column">
+            <!-- Tutaj będą ikony serwerów -->
+        </nav>
+
+        <!-- Kolumna 2: Kanały i Ustawienia Użytkownika -->
+        <aside class="channels-column">
+            <header class="server-header">
+                <h3>Nazwa Serwera</h3>
+            </header>
+            <div class="channels-list">
+                <!-- Tutaj będą kanały tekstowe -->
+            </div>
+            <footer class="user-panel">
+                <!-- Tutaj info o zalogowanym użytkowniku -->
+            </footer>
+        </aside>
+
+        <!-- Kolumna 3: Czat i Lista Użytkowników -->
+        <main class="chat-column">
+            <header class="chat-header">
+                <h4># nazwa-kanalu</h4>
+            </header>
+            <div class="chat-content">
+                <div class="messages-area">
+                    <!-- Tutaj będą wyświetlane wiadomości -->
+                </div>
+                <div class="users-area">
+                    <!-- Tutaj będzie lista użytkowników -->
+                </div>
+            </div>
+            <footer class="chat-input-area">
+                <input type="text" placeholder="Napisz wiadomość na #nazwa-kanalu">
+            </footer>
+        </main>
+    </div>
+
+
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
