@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamifikowana Lista Zadań PRO</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Level Up Your Day</h1>
+            <div class="gamification-panel">
+                <div class="level-display">
+                    POZIOM
+                    <span id="level">1</span>
+                </div>
+                <div class="xp-display">
+                    <div class="xp-bar-container">
+                        <div id="xp-bar" class="xp-bar"></div>
+                    </div>
+                    <div class="xp-text">XP: <span id="xp">0</span> / <span id="xp-next-level">100</span></div>
+                </div>
+            </div>
+            <div class="achievements-panel">
+                <h2>Osiągnięcia</h2>
+                <ul id="achievements-list"></ul>
+            </div>
+        </header>
+
+        <main>
+            <section class="task-form-section">
+                <form id="add-task-form">
+                    <input type="text" id="new-task-input" placeholder="Co masz dziś do zrobienia?" required>
+                    <button type="submit" class="btn-add">Dodaj</button>
+                </form>
+            </section>
+
+            <section class="task-list-section">
+                <h2>Misje na dziś</h2>
+                <ul id="task-list" class="task-list"></ul>
+            </section>
+        </main>
+    </div>
+
+    <div id="notification-container" class="notification-container"></div>
+    
+    <!-- Modal Level Up (domyślnie ukryty) -->
+    <div id="level-up-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>LEVEL UP!</h2>
+            <p>Osiągnięto <span id="new-level-achieved">X</span> poziom!</p>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
