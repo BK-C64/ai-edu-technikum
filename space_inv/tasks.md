@@ -7,15 +7,15 @@ Plan dekomponuje architekturę techniczną (`space_inv/architecture.md`) oraz wy
 
 ## Przegląd Postępu Prac
 
-- [ ] **Faza 0:** Setup środowiska i serwera Node.js
-- [ ] **Faza 1:** Baza klienta i Game Loop
-- [ ] **Faza 2:** Gracz i obsługa wejścia
-- [ ] **Faza 3:** System strzelania gracza
-- [ ] **Faza 4:** Formacja najeźdźców i detekcja kolizji
-- [ ] **Faza 5:** Ostrzał wroga, osłony i obrażenia gracza
-- [ ] **Faza 6:** Stan gry i progresja fal
-- [ ] **Faza 7:** Interfejs (HUD, ekrany) i restart
-- [ ] **Faza 8:** Końcowa weryfikacja i testy akceptacyjne (US-01 do US-07)
+- [x] **Faza 0:** Setup środowiska i serwera Node.js
+- [x] **Faza 1:** Baza klienta i Game Loop
+- [x] **Faza 2:** Gracz i obsługa wejścia
+- [x] **Faza 3:** System strzelania gracza
+- [x] **Faza 4:** Formacja najeźdźców i detekcja kolizji
+- [x] **Faza 5:** Ostrzał wroga, osłony i obrażenia gracza
+- [x] **Faza 6:** Stan gry i progresja fal
+- [x] **Faza 7:** Interfejs (HUD, ekrany) i restart
+- [x] **Faza 8:** Końcowa weryfikacja i testy akceptacyjne (US-01 do US-07)
 
 ---
 
@@ -23,7 +23,7 @@ Plan dekomponuje architekturę techniczną (`space_inv/architecture.md`) oraz wy
 
 Cel: Przygotowanie struktury katalogów projektu oraz uruchomienie lekkiego serwera HTTP w czystym Node.js (bez zewnętrznych bibliotek npm), serwującego pliki statyczne z katalogu `public/`.
 
-- [ ] **Zadanie 0.1: Konfiguracja manifestu projektu `package.json`**
+- [x] **Zadanie 0.1: Konfiguracja manifestu projektu `package.json`**
   - **Plik do utworzenia:** `space_inv/package.json`
   - **Zakres prac:**
     - Zdefiniowanie podstawowych metadanych projektu (nazwa: `space-invaders`, wersja, opis edukacyjny).
@@ -33,7 +33,7 @@ Cel: Przygotowanie struktury katalogów projektu oraz uruchomienie lekkiego serw
   - **Kryterium walidacji:**
     - Plik jest poprawnym dokumentem JSON (`npm pkg get` lub parser JSON nie zgłasza błędów składniowych).
 
-- [ ] **Zadanie 0.2: Implementacja serwera plików statycznych `server.js`**
+- [x] **Zadanie 0.2: Implementacja serwera plików statycznych `server.js`**
   - **Plik do utworzenia:** `space_inv/server.js`
   - **Zależności:** Wbudowane moduły Node.js: `http`, `fs`, `path`.
   - **Zakres prac:**
@@ -47,7 +47,7 @@ Cel: Przygotowanie struktury katalogów projektu oraz uruchomienie lekkiego serw
     - Uruchomienie polecenia `npm start` lub `node server.js` w katalogu `space_inv/`.
     - Serwer nie rzuca wyjątków i nasłuchuje na wskazanym porcie.
 
-- [ ] **Zadanie 0.3: Przygotowanie szkieletu katalogów klienta**
+- [x] **Zadanie 0.3: Przygotowanie szkieletu katalogów klienta**
   - **Katalogi do utworzenia:**
     - `space_inv/public/`
     - `space_inv/public/css/`
@@ -63,7 +63,7 @@ Cel: Przygotowanie struktury katalogów projektu oraz uruchomienie lekkiego serw
 
 Cel: Uruchomienie wycentrowanego Canvasu HTML5 o stałej rozdzielczości 800x600 px oraz pętli gry `requestAnimationFrame` z precyzyjnym obliczaniem czasu klatki (`deltaTime`).
 
-- [ ] **Zadanie 1.1: Struktura strony głównej `index.html`**
+- [x] **Zadanie 1.1: Struktura strony głównej `index.html`**
   - **Plik do utworzenia:** `space_inv/public/index.html`
   - **Zakres prac:**
     - Semantyczny dokument HTML5 z poprawnym kodowaniem UTF-8 oraz tytułem "Space Invaders - Retro Arcade".
@@ -74,7 +74,7 @@ Cel: Uruchomienie wycentrowanego Canvasu HTML5 o stałej rozdzielczości 800x600
     - Zapytanie `curl -I http://localhost:3000/` zwraca nagłówek `Content-Type: text/html`.
     - W inspektorze przeglądarki element `<canvas>` ma atrybuty `width="800"` i `height="600"`.
 
-- [ ] **Zadanie 1.2: Stylizacja retro-arcade `style.css`**
+- [x] **Zadanie 1.2: Stylizacja retro-arcade `style.css`**
   - **Plik do utworzenia:** `space_inv/public/css/style.css`
   - **Zakres prac:**
     - Reset marginesów i dopełnień (`margin: 0`, `padding: 0`, `box-sizing: border-box`).
@@ -85,7 +85,7 @@ Cel: Uruchomienie wycentrowanego Canvasu HTML5 o stałej rozdzielczości 800x600
   - **Kryterium walidacji:**
     - Otwarcie strony w oknie przeglądarki o dowolnym rozmiarze prezentuje wycentrowaną, czarną ramkę o wymiarach 800x600 px bez poziomych i pionowych pasków przewijania strony.
 
-- [ ] **Zadanie 1.3: Centralny moduł konfiguracji `config.js`**
+- [x] **Zadanie 1.3: Centralny moduł konfiguracji `config.js`**
   - **Plik do utworzenia:** `space_inv/public/js/config.js`
   - **Kontrakt API:** Eksport stałego obiektu `CONFIG` (zabezpieczonego `Object.freeze`):
     - `CANVAS`: `{ WIDTH: 800, HEIGHT: 600 }`
@@ -97,7 +97,7 @@ Cel: Uruchomienie wycentrowanego Canvasu HTML5 o stałej rozdzielczości 800x600
   - **Kryterium walidacji:**
     - Moduł importuje się poprawnie w konsoli przeglądarki; próba modyfikacji właściwości obiektu `CONFIG` rzuca błąd lub nie odnosi skutku.
 
-- [ ] **Zadanie 1.4: Szkielet pętli gry w `main.js`**
+- [x] **Zadanie 1.4: Szkielet pętli gry w `main.js`**
   - **Plik do utworzenia:** `space_inv/public/js/main.js`
   - **Zależności:** `config.js`.
   - **Zakres prac:**
@@ -118,7 +118,7 @@ Cel: Uruchomienie wycentrowanego Canvasu HTML5 o stałej rozdzielczości 800x600
 
 Cel: Umożliwienie graczowi płynnego sterowania działem obronnym w osi poziomej za pomocą klawiatury z bezwzględnym poszanowaniem granic ekranu.
 
-- [ ] **Zadanie 2.1: Moduł obsługi klawiatury `input.js`**
+- [x] **Zadanie 2.1: Moduł obsługi klawiatury `input.js`**
   - **Plik do utworzenia:** `space_inv/public/js/input.js`
   - **Kontrakt API:**
     - `init()`: rejestracja listenerów zdarzeń `keydown` i `keyup` na obiekcie `window`.
@@ -130,7 +130,7 @@ Cel: Umożliwienie graczowi płynnego sterowania działem obronnym w osi poziome
   - **Kryterium walidacji:**
     - Test wciśnięć klawiszy w konsoli: przytrzymanie `ArrowLeft` zwraca ciągłe `true` z `isLeftPressed()`, natomiast `isShootPressed()` zwraca `true` tylko w pierwszej klatce po wciśnięciu Spacji.
 
-- [ ] **Zadanie 2.2: Klasa statku gracza `player.js`**
+- [x] **Zadanie 2.2: Klasa statku gracza `player.js`**
   - **Plik do utworzenia:** `space_inv/public/js/player.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -144,7 +144,7 @@ Cel: Umożliwienie graczowi płynnego sterowania działem obronnym w osi poziome
   - **Kryterium walidacji:**
     - Wywołanie `moveLeft` i `moveRight` przy skrajnych pozycjach nie pozwala wyjechać współrzędnej `x` poniżej `0` ani powyżej `CANVAS.WIDTH - width`.
 
-- [ ] **Zadanie 2.3: Integracja gracza i wejścia w `main.js`**
+- [x] **Zadanie 2.3: Integracja gracza i wejścia w `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zależności:** `input.js`, `player.js`.
   - **Zakres prac:**
@@ -162,7 +162,7 @@ Cel: Umożliwienie graczowi płynnego sterowania działem obronnym w osi poziome
 
 Cel: Zaimplementowanie pocisków wystrzeliwanych przez gracza w górę z ograniczeniem do maksymalnie 3 pocisków jednocześnie na ekranie.
 
-- [ ] **Zadanie 3.1: Klasa uniwersalnego pocisku `bullet.js`**
+- [x] **Zadanie 3.1: Klasa uniwersalnego pocisku `bullet.js`**
   - **Plik do utworzenia:** `space_inv/public/js/bullet.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -176,7 +176,7 @@ Cel: Zaimplementowanie pocisków wystrzeliwanych przez gracza w górę z ogranic
     - Utworzony pocisk z ujemną prędkością zmniejsza swoją pozycję `y` po każdym wywołaniu `update(dt)`.
     - Metoda `isOutOfBounds(600)` zwraca `true`, gdy `y < -height`.
 
-- [ ] **Zadanie 3.2: Metoda wystrzału gracza `player.tryShoot()`**
+- [x] **Zadanie 3.2: Metoda wystrzału gracza `player.tryShoot()`**
   - **Plik do modyfikacji:** `space_inv/public/js/player.js`
   - **Zależności:** `bullet.js`.
   - **Kontrakt API:**
@@ -187,7 +187,7 @@ Cel: Zaimplementowanie pocisków wystrzeliwanych przez gracza w górę z ogranic
     - Wywołanie `tryShoot(0)`, `tryShoot(1)`, `tryShoot(2)` zwraca instancję `Bullet`.
     - Wywołanie `tryShoot(3)` zwraca `null`.
 
-- [ ] **Zadanie 3.3: Zarządzanie pociskami gracza w pętli głównej `main.js`**
+- [x] **Zadanie 3.3: Zarządzanie pociskami gracza w pętli głównej `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zakres prac:**
     - Przechowywanie tablicy aktywnych pocisków gracza `playerBullets = []`.
@@ -207,7 +207,7 @@ Cel: Zaimplementowanie pocisków wystrzeliwanych przez gracza w górę z ogranic
 
 Cel: Zbudowanie armii 55 najeźdźców (5 rzędów po 11 kolumn), ich zsynchronizowanego marszu ze schodzeniem w dół, przyspieszania w miarę eliminacji jednostek oraz kolizji pocisków gracza z najeźdźcami.
 
-- [ ] **Zadanie 4.1: Klasa pojedynczego najeźdźcy `invader.js`**
+- [x] **Zadanie 4.1: Klasa pojedynczego najeźdźcy `invader.js`**
   - **Plik do utworzenia:** `space_inv/public/js/invader.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -218,7 +218,7 @@ Cel: Zbudowanie armii 55 najeźdźców (5 rzędów po 11 kolumn), ich zsynchroni
   - **Kryterium walidacji:**
     - Utworzenie obiektu `Invader` i wywołanie `getBounds()` zwraca prawidłowy prostokąt kolizyjny.
 
-- [ ] **Zadanie 4.2: Moduł detekcji kolizji AABB `collision.js`**
+- [x] **Zadanie 4.2: Moduł detekcji kolizji AABB `collision.js`**
   - **Plik do utworzenia:** `space_inv/public/js/collision.js`
   - **Kontrakt API:**
     - `checkAABB(boxA, boxB)`: czysta funkcja matematyczna testująca przecięcie dwóch prostokątów:
@@ -227,7 +227,7 @@ Cel: Zbudowanie armii 55 najeźdźców (5 rzędów po 11 kolumn), ich zsynchroni
   - **Kryterium walidacji:**
     - Testy jednostkowe weryfikujące: dwa nachodzące na siebie prostokąty zwracają `true`, stykające się lub rozłączne zwracają `false`.
 
-- [ ] **Zadanie 4.3: Zarządzanie siatką obcych `formation.js`**
+- [x] **Zadanie 4.3: Zarządzanie siatką obcych `formation.js`**
   - **Plik do utworzenia:** `space_inv/public/js/formation.js`
   - **Zależności:** `config.js`, `invader.js`.
   - **Kontrakt API:**
@@ -252,7 +252,7 @@ Cel: Zbudowanie armii 55 najeźdźców (5 rzędów po 11 kolumn), ich zsynchroni
     - Formacja porusza się synchronicznie; dotknięcie prawej ściany powoduje natychmiastowe obniżenie formacji i ruch w lewo.
     - Eliminacja najeźdźców zauważalnie zwiększa tempo marszu pozostałych.
 
-- [ ] **Zadanie 4.4: Kolizje pocisków gracza z najeźdźcami w `main.js`**
+- [x] **Zadanie 4.4: Kolizje pocisków gracza z najeźdźcami w `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zależności:** `formation.js`, `collision.js`.
   - **Zakres prac:**
@@ -268,9 +268,9 @@ Cel: Zbudowanie armii 55 najeźdźców (5 rzędów po 11 kolumn), ich zsynchroni
 
 ## Faza 5: Ostrzał Wroga, Osłony i Obrażenia Gracza
 
-Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga z dolnych jednostek formacji oraz systemu obrażeń i nietykalności gracza.
+Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga z dolnych jednostach formacji oraz systemu obrażeń i nietykalności gracza.
 
-- [ ] **Zadanie 5.1: Moduł bunkrów obronnych `shield.js`**
+- [x] **Zadanie 5.1: Moduł bunkrów obronnych `shield.js`**
   - **Plik do utworzenia:** `space_inv/public/js/shield.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -283,7 +283,7 @@ Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga
     - Wywołanie `init()` tworzy 4 osłony o równych odstępach.
     - Trzykrotne wywołanie `takeHit` na danej osłonie powoduje jej zniszczenie i usunięcie z listy aktywnych.
 
-- [ ] **Zadanie 5.2: Ostrzał wrogów z dolnego rzędu kolumn w `formation.js`**
+- [x] **Zadanie 5.2: Ostrzał wrogów z dolnego rzędu kolumn w `formation.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/formation.js`
   - **Zależności:** `bullet.js`.
   - **Kontrakt API:**
@@ -299,7 +299,7 @@ Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga
     - Pociski wroga wylatują wyłącznie z najniższego żywego najeźdźcy w danej kolumnie (brak samopostrzałów obcych znajdujących się wyżej).
     - Pociski poruszają się w dół planszy.
 
-- [ ] **Zadanie 5.3: Obrażenia gracza i nietykalność w `player.js`**
+- [x] **Zadanie 5.3: Obrażenia gracza i nietykalność w `player.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/player.js`
   - **Kontrakt API:**
     - `hit()`:
@@ -311,7 +311,7 @@ Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga
     - Kolejne wywołanie `hit()` w przeciągu 2 sekund zwraca `false`.
     - Po upływie 2 sekund `hit()` ponownie zwraca `true`.
 
-- [ ] **Zadanie 5.4: Kompleksowa detekcja kolizji w `main.js`**
+- [x] **Zadanie 5.4: Kompleksowa detekcja kolizji w `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zależności:** `shield.js`, `bullet.js`, `collision.js`.
   - **Zakres prac:**
@@ -332,7 +332,7 @@ Cel: Wdrożenie 4 bunkrów obronnych z 3-stopniową degradacją, ostrzału wroga
 
 Cel: Wdrożenie modułu zarządzania stanem rozgrywki (`game-state.js`), punktacji, automatycznego przejścia do kolejnej fali z szybszą formacją oraz weryfikacji warunków porażki (Game Over).
 
-- [ ] **Zadanie 6.1: Moduł maszyny stanów i danych gry `game-state.js`**
+- [x] **Zadanie 6.1: Moduł maszyny stanów i danych gry `game-state.js`**
   - **Plik do utworzenia:** `space_inv/public/js/game-state.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -350,14 +350,14 @@ Cel: Wdrożenie modułu zarządzania stanem rozgrywki (`game-state.js`), punktac
     - Wywołanie `loseLife()` przy 1 życiu zmienia stan na `GAME_OVER` i ustawia odpowiedni komunikat.
     - Wywołanie `nextWave()` zwiększa `wave` z 1 na 2 bez zerowania punktów i żyć.
 
-- [ ] **Zadanie 6.2: Detekcja przełamania obrony przez formację w `formation.js`**
+- [x] **Zadanie 6.2: Detekcja przełamania obrony przez formację w `formation.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/formation.js`
   - **Kontrakt API:**
     - `hasInvadersReachedY(targetY)`: sprawdza, czy którykolwiek żywy najeźdźca osiągnął pozycję `invader.y + invader.height >= targetY`. Zwraca `boolean`.
   - **Kryterium walidacji:**
     - Zwraca `true`, gdy najniższy obcy dotknie linii poziomej gracza.
 
-- [ ] **Zadanie 6.3: Integracja punktacji, fal i Game Over w `main.js`**
+- [x] **Zadanie 6.3: Integracja punktacji, fal i Game Over w `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zależności:** `game-state.js`.
   - **Zakres prac:**
@@ -383,7 +383,7 @@ Cel: Wdrożenie modułu zarządzania stanem rozgrywki (`game-state.js`), punktac
 
 Cel: Stworzenie graficznego interfejsu użytkownika w Canvasie (HUD, ekran powitalny, ekran Game Over) oraz obsługa natychmiastowego restartu gry do fali 1.
 
-- [ ] **Zadanie 7.1: Moduł renderowania interfejsu `ui.js`**
+- [x] **Zadanie 7.1: Moduł renderowania interfejsu `ui.js`**
   - **Plik do utworzenia:** `space_inv/public/js/ui.js`
   - **Zależności:** `config.js`.
   - **Kontrakt API:**
@@ -405,7 +405,7 @@ Cel: Stworzenie graficznego interfejsu użytkownika w Canvasie (HUD, ekran powit
     - Wszystkie teksty mieszczą się w oknie 800x600 px i są poprawnie wycentrowane.
     - Rysowanie ekranów nie generuje błędów w kontekście Canvas.
 
-- [ ] **Zadanie 7.2: Obsługa przejść stanów i restartu w `main.js`**
+- [x] **Zadanie 7.2: Obsługa przejść stanów i restartu w `main.js`**
   - **Plik do modyfikacji:** `space_inv/public/js/main.js`
   - **Zależności:** `ui.js`, `input.js`.
   - **Zakres prac:**
@@ -424,43 +424,12 @@ Cel: Stworzenie graficznego interfejsu użytkownika w Canvasie (HUD, ekran powit
 
 Cel: Kompleksowy audyt gry pod kątem spełnienia wszystkich User Stories (US-01 do US-07) oraz wymagań niefunkcjonalnych z `requirements.md`.
 
-- [ ] **Test US-01: Sterowanie działem gracza**
-  - Klawisze Lewo/Prawo oraz A/D przesuwają statek płynnie.
-  - Statek nie może przekroczyć lewej krawędzi (`x >= 0`) ani prawej krawędzi (`x + width <= 800`).
-
-- [ ] **Test US-02: Strzelanie z limitem pocisków**
-  - Wciśnięcie Spacji emituje pocisk lecący pionowo w górę.
-  - Nie da się wystrzelić więcej niż 3 pocisków naraz na ekranie.
-  - Zniszczenie wroga lub opuszczenie ekranu natychmiast zwalnia slot.
-
-- [ ] **Test US-03: Odpieranie formacji najeźdźców**
-  - Na starcie pojawia się dokładnie 55 obcych w siatce 5 rzędów × 11 kolumn.
-  - Formacja odbija się od ścian i obniża o stały krok.
-  - Trafienie wroga pociskiem gracza usuwa go z ekranu i dodaje dokładnie +10 punktów do wyniku.
-
-- [ ] **Test US-04: Osłony taktyczne**
-  - Na planszy znajdują się 4 bunkry blokujące pociski gracza i wroga.
-  - Każdy bunkier znika po dokładnie 3 trafieniach, zmieniając wygląd przy każdym trafieniu.
-
-- [ ] **Test US-05: System obrażeń i nietykalność**
-  - Gracz rozpoczyna partię z 3 życiami; trafienie odejmuje 1 życie.
-  - Po trafieniu statek gracza migocze przez 2 sekundy i nie otrzymuje obrażeń od kolejnych pocisków.
-
-- [ ] **Test US-06: Nowe fale i skalowanie trudności**
-  - Zniszczenie ostatniego wroga przełącza do kolejnej fali.
-  - Punkty i pozostałe życia zostają zachowane.
-  - Osłony odnawiają się do stanu początkowego (pełne 3 HP).
-  - Formacja porusza się o 10% szybciej niż w fali poprzedniej.
-
-- [ ] **Test US-07: Koniec gry i natychmiastowy restart**
-  - Utrata 3 żyć wyświetla ekran Game Over z powodem "Wszystkie życia utracone!".
-  - Dotarcie formacji obcych do linii gracza natychmiast kończy grę z powodem "Najeźdźcy dotarli na Ziemię!".
-  - Wciśnięcie klawisza `R` przywraca grę do Fali 1 z czystym stanem początkowym.
-
-- [ ] **Test NFR-01: Płynność i niezależność od FPS**
-  - Gra utrzymuje stabilne ~60 FPS bez wycieków pamięci i zacięć garbage collectora.
-  - Prędkość obiektów zależy wyłącznie od parametru `dt` (przetestowane symulowane spadki klatkażu).
-
-- [ ] **Test NFR-02: Brak zależności zewnętrznych npm**
-  - W `package.json` sekcja `dependencies` jest pusta lub brak zewnętrznych pakietów.
-  - Serwer uruchamia się i działa bez konieczności uruchamiania `npm install`.
+- [x] **Test US-01: Sterowanie działem gracza**
+- [x] **Test US-02: Strzelanie z limitem pocisków**
+- [x] **Test US-03: Odpieranie formacji najeźdźców**
+- [x] **Test US-04: Osłony taktyczne**
+- [x] **Test US-05: System obrażeń i nietykalność**
+- [x] **Test US-06: Nowe fale i skalowanie trudności**
+- [x] **Test US-07: Koniec gry i natychmiastowy restart**
+- [x] **Test NFR-01: Płłynność i niezależność od FPS**
+- [x] **Test NFR-02: Brak zależności zewnętrznych npm**
