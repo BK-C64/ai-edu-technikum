@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Edu IRC Client</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>IRC Prototype Client</h1>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <h2>Login to Chat</h2>
+            <input type="text" id="serverAddress" placeholder="Server Address (ws://localhost:8000/ws)">
+            <input type="password" id="serverPassword" placeholder="Server Password">
+            <input type="text" id="username" placeholder="Your Nickname">
+            <button id="connectButton">Connect</button>
+        </div>
+
+        <!-- Chat Section (Hidden by default) -->
+        <div id="chatSection" class="chat-section hidden">
+            <div class="chat-main-area">
+                <div id="chatBoxContainer">
+                    <div id="chatBox"></div>
+                </div>
+                <div id="userListArea">
+                    <h3>Users Online (<span id="userCount">0</span>)</h3>
+                    <div id="userList"><ul></ul></div>
+                </div>
+            </div>
+            <div id="messageInputContainer">
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div id="status" class="status-info">Ready to connect.</div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
