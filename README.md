@@ -1,50 +1,125 @@
-# Cześć! Witaj w projekcie "AI Team Chat" (Wersja dla Ucznia)
+# Witaj w AI Edu Technikum: Środowisko Wieloagentowe (Gry Webowe)
 
-Hej! Jeśli tu jesteś, to znaczy, że zaczynamy wspólną przygodę z programowaniem. Ten plik to Twój przewodnik – przeczytaj go, aby zrozumieć, co będziemy razem tworzyć.
+Cześć! Jeśli tu jesteś, to znaczy, że rozpoczynamy wspólną przygodę z nowoczesnym programowaniem gier webowych i pracą w wieloagentowym zespole asystowanym przez sztuczną inteligencję (AI).
+
+Ten plik to Twój przewodnik po repozytorium — przeczytaj go, aby dowiedzieć się, co tworzymy, z jakich technologii korzystamy i jak współpracować z agentami AI.
+
+---
 
 ## 1. Co my właściwie robimy? (Nasz Cel)
 
-**W skrócie:** Budujemy od zera własną aplikację do czatowania, trochę jak uproszczony Slack albo Discord.
+**W skrócie:** Projektujemy i budujemy od podstaw gry internetowe (od klasycznych zręcznościówek retro 2D Canvas po trójwymiarowe światy voxelowe w WebGL / Three.js), symulując pracę w profesjonalnym zespole IT.
 
-**Dlaczego?** Żeby nauczyć się w praktyce, jak działają nowoczesne aplikacje internetowe. Zobaczysz, jak "gada ze sobą" strona internetowa, którą widzisz (frontend), z serwerem, który działa w tle (backend). To super ważna wiedza dla każdego przyszłego programisty!
+**Dlaczego?**
+- Uczymy się tworzenia gier: pętla gry (*game loop* 60 FPS), fizyka 2D/3D, kolizje, obsługa wejścia gracza (*InputHandler*), stany gry oraz architektura klient-serwer.
+- Doświadczamy pełnego cyklu życia oprogramowania: od pomysłu, przez wymagania produktowe, architekturę techniczną i planowanie zadań, po implementację i testy.
+- Uczymy się efektywnej pracy ze sztuczną inteligencją w podziale na wyspecjalizowane role (subagenci).
 
-## 2. Z jakich klocków to zbudujemy? (Technologie)
+W repozytorium znajdziesz gotowy projekt wzorcowy gry retro: **`space_inv/` (Space Invaders)**.
 
-Każda aplikacja jest jak budowla z klocków. My użyjemy sprawdzonych i popularnych technologii, które warto znać.
+---
 
-### Coś, co działa w tle – "Mózg" aplikacji (Backend)
-To część, której nie widać. Działa na serwerze i zajmuje się całą logiką: zarządza użytkownikami, przechowuje wiadomości i wysyła je do odpowiednich osób.
--   **Język:** Będziemy pisać w **Pythonie** – jest bardzo popularny i stosunkowo łatwy do nauczenia.
--   **Narzędzia:** Użyjemy **FastAPI** (pomaga szybko budować logikę serwera) i **WebSockets** (technologia do rozmów w czasie rzeczywistym).
--   **Pamięć:** Nasze wiadomości i użytkowników będziemy zapisywać w małej, plikowej bazie danych **SQLite**.
+## 2. Z jakich klocków to budujemy? (Stos Technologiczny)
 
-### Coś, co widać w przeglądarce – "Wygląd" aplikacji (Frontend)
-To jest wszystko to, co widzisz i w co możesz klikać na stronie internetowej.
--   **Język:** Użyjemy trzech podstawowych języków internetu:
-    -   **HTML** – do stworzenia szkieletu strony (gdzie co jest).
-    -   **CSS** – do pokolorowania i upiększenia wszystkiego (wygląd).
-    -   **JavaScript (bez żadnych dodatków!)** – do ożywienia strony, aby reagowała na kliknięcia i komunikowała się z "mózgiem" aplikacji.
+Dla zachowania przejrzystości i wysokiej wartości dydaktycznej korzystamy z nowoczesnego, ale minimalistycznego stacku webowego bez zbędnych, skomplikowanych frameworków:
 
-**Chcesz wiedzieć więcej?** Szczegółowe, techniczne decyzje znajdziesz w [dokumentach architektonicznych](docs/architecture/).
+### Backend / Serwer
+- **Node.js**: środowisko uruchomieniowe backendu.
+- **Serwer HTTP**: wbudowany w Node.js moduł `http` lub minimalistyczny `express` do serwowania plików gry i ewentualnych endpointów API.
+- **Ekosystem npm**: zarządzanie zależnościami (`package.json`) oraz opcjonalnymi bibliotekami (np. komunikacja w czasie rzeczywistym przez `ws`/`socket.io`, silniki matematyczne).
 
-## 3. Jak będzie wyglądał nasz proces pracy? (Praca z AI)
+### Frontend / Klient
+- **HTML5**: semantyczna struktura strony, kontener elementu `<canvas>` oraz nakładki interfejsu.
+- **CSS3**: stylizacja interfejsu gracza (HUD, licznik żyć i punktów, ekrany startowe i Game Over, retro stylistyka).
+- **JavaScript (ES6+)**: czysty, modularny JavaScript odpowiedzialny za logikę gry, pętlę renderowania i sterowanie.
+- **Grafika**: Canvas 2D API oraz WebGL (np. biblioteka Three.js przy projektach 3D).
 
-Wyobraź sobie, że mamy mały zespół ekspertów, którzy pomagają nam na każdym kroku. W naszym projekcie te role odgrywa Sztuczna Inteligencja (AI). Dzięki temu zobaczysz, jak wygląda praca w prawdziwym zespole programistycznym.
+---
 
-Oto nasz "zespół":
+## 3. Zespół Subagentów AI (Kto jest kim?)
 
--   **[Product Manager](agents/product-manager_pl.md) (Szef Produktu):** Ustala, **CO** mamy zbudować. To on tworzy listę funkcji i historyjki użytkownika, np. "Użytkownik powinien móc wysłać wiadomość".
+W projekcie nie piszesz wszystkiego w pojedynkę w chaosie — korzystasz ze wsparcia dedykowanego zespołu subagentów AI (zdefiniowanych w katalogu `.pi/agents/` i opisanych szczegółowo w [`agents.md`](agents.md)):
 
--   **[UX Designer](agents/ux-designer_pl.md) (Projektant Wyglądu):** Projektuje, **JAK** aplikacja ma wyglądać. Tworzy wizualne makiety (jak te w katalogu `docs/product/design_ux/`), abyśmy wiedzieli, do jakiego efektu dążymy.
+| Subagent | Plik definicji | Rola w zespole | Co tworzy? |
+| --- | --- | --- | --- |
+| **Product Manager** | `.pi/agents/product-manager-pl.md` | Ustala **CO** budujemy: zasady gry, mechaniki, pętlę rozgrywki, historyjki gracza (User Stories) i kryteria akceptacji. | `requirements.md` |
+| **Solution Architect** | `.pi/agents/solution-architect-pl.md` | Projektuje **JAK** zbudować grę technicznie: moduły, dobór pakietów npm, architekturę serwera Node.js i klienta gry. | `architecture.md` |
+| **Tech Lead** | `.pi/agents/tech-lead-task-planner-pl.md` | Dzieli architekturę na małe, sekwencyjne kroki implementacyjne i checklisty deweloperskie. | `tasks.md` / `IMPLEMENTATION_PLAN.md` |
+| **UX Designer** | `.pi/agents/ux-designer-pl.md` | Projektuje interfejs gry: układ ekranu, nakładki HUD, menu startowe, ekran Game Over w HTML5 i CSS3. | `index.html` + `style.css` |
+| **Software Developer** | `.pi/agents/software-developer-pl.md` | Pisze właściwy kod w Node.js i JavaScript, dba o czystość kodu i stabilne 60 FPS. | Kod gry (`server.js`, `main.js`, moduły) |
 
--   **[Architekt](agents/solution-architect_pl.md) (Główny Inżynier):** Planuje, **JAK** zbudować aplikację od strony technicznej. Tworzy "mapy" i "schematy" (jak `api_design.md` czy `database_schema.md`), żeby wszystko do siebie pasowało.
+---
 
--   **[Tech Lead](agents/tech-lead-task-planner_pl.md) (Lider Zespołu Technicznego):** Rozbija plany Architekta na małe, konkretne zadania do wykonania. Tworzy dla nas checklisty, np. "Stwórz plik `main.js`".
+## 4. Jak wygląda proces pracy? (Workflow)
 
--   **[Deweloper](agents/software-developer_pl.md) (Programista):** To główny wykonawca – czyli **Ty i ja!** Bierzemy zadania od Tech Leada i piszemy kod, który sprawia, że aplikacja zaczyna działać.
+Praca nad każdą grą przebiega w zorganizowanym, kaskadowo-zwinnym procesie:
 
-## 4. Co dalej?
+```text
+[ Pomysł / Temat Gry ]
+         │
+         ▼
+1. Product Manager ─────────► requirements.md (wymagania, mechaniki, User Stories)
+         │
+         ▼
+2. Solution Architect ──────► architecture.md (architektura Node.js + Canvas/WebGL, pakiety npm)
+         │
+         ├──────────────────────────────┐
+         ▼                              ▼
+3. Tech Lead ──────────────► tasks.md   4. UX Designer ──► index.html + style.css (szablon UI/HUD)
+         │                              │
+         └──────────────┬───────────────┘
+                        ▼
+5. Software Developer ─────► Implementacja kodu Node.js & JS (realizacja krok po kroku)
+                        │
+                        ▼
+               Weryfikacja i Testy (npm start -> http://localhost:3000)
+```
 
-Jesteśmy gotowi do startu! Naszym pierwszym celem (opisanym w **Lekcji 1**) jest stworzenie szkieletu aplikacji i nawiązanie pierwszego połączenia między frontendem a backendem.
+### Role uczniów i nauczycieli:
+1. **Uczeń jako Developer:** Pobierasz plan od Tech Leada i z pomocą asystenta implementujesz poszczególne moduły gry.
+2. **Uczeń jako Product Manager:** Wymyślasz własną grę, piszesz założenia, a agenci AI pomagają stworzyć architekturę i kod.
+3. **Weryfikacja i ocena:** Nauczyciel i uczniowie analizują poprawność architektury, zgodność z kryteriami akceptacji i jakość kodu.
 
-Zaczynajmy!
+---
+
+## 5. Jak uruchomić przykładową grę (Szybki Start)
+
+W repozytorium znajduje się przykładowa implementacja klasycznej gry Space Invaders w katalogu `space_inv`.
+
+1. Przejdź do katalogu projektu:
+   ```bash
+   cd space_inv
+   ```
+
+2. Zainstaluj ewentualne zależności:
+   ```bash
+   npm install
+   ```
+
+3. Uruchom serwer gry:
+   ```bash
+   npm start
+   ```
+
+4. Otwórz przeglądarkę i wpisz adres:
+   ```text
+   http://localhost:3000
+   ```
+
+---
+
+## 6. Struktura Repozytorium
+
+- **`.pi/agents/`** – pliki definicji ról subagentów w środowisku pi (prompty systemowe, zakresy odpowiedzialności).
+- **`agents.md`** – szczegółowa dokumentacja środowiska wieloagentowego i zasad współpracy.
+- **`space_inv/`** – kompletny projekt gry retro Space Invaders:
+  - `requirements.md` – wymagania i reguły spisane przez Product Managera,
+  - `architecture.md` – projekt techniczny stworzony przez Solution Architecta,
+  - `tasks.md` – dekompozycja zadań przygotowana przez Tech Leada,
+  - `server.js` – lekki serwer HTTP w Node.js,
+  - `public/` – pliki klienta (`index.html`, style CSS, skrypty JS pętli gry).
+- **`nauczyciele/`** oraz **`uczniowie/`** – scenariusze lekcji i materiały warsztatowe.
+
+---
+
+Gotowy na stworzenie własnej gry? Wybierz rolę i zacznijmy kodować!
