@@ -12,17 +12,19 @@ Głównym projektem realizowanym w repozytorium jest edukacyjny komunikator inte
 
 ---
 
-## 2. Architektura Ról Subagentów
+## 2. Architektura Ról: Subagenci i Skille
 
-W procesie wytwarzania oprogramowania uczestniczy dedykowany zespół wyspecjalizowanych subagentów (zdefiniowanych w katalogu `.pi/agents/`). Każdy agent odpowiada za inną fazę projektu, symulując role w profesjonalnym zespole produktowo-inżynieryjnym:
+W procesie wytwarzania oprogramowania uczestniczy dedykowany zespół wyspecjalizowanych ról (zdefiniowanych w `.pi/agents/` oraz `.pi/skills/`). W zależności od potrzeb zadania możemy z nich korzystać w dwóch trybach:
+- **Subagent (`@nazwa`)**: autonomiczne zadania w tle, idealne do większych kaskad prac i izolacji kontekstu.
+- **Skill in-line (`/skill:nazwa`)**: natychmiastowe przyjęcie roli w głównym oknie dialogowym, idealne do szybkich iteracji z nauczycielem.
 
-| Subagent | Plik definicji | Główna rola i odpowiedzialność |
-| --- | --- | --- |
-| **`pm`** (Product Manager) | `.pi/agents/pm.md` | Definiowanie wizji komunikatora, User Stories, kryteriów akceptacji, logiki kanałów i uprawnień (`docs/produkt.md`). |
-| **`architekt`** (Solution Architect) | `.pi/agents/architekt.md` | Opracowanie projektu technicznego full-stack (`docs/architecture_plan/basic_choices.md`, `api_design.md`, `database_schema.md`), protokołu WebSocket (JSON C2S/S2C), podziału na moduły backendu (FastAPI) i klienta (Vanilla JS) z poszanowaniem zasad DRY i SOLID. |
-| **`planner`** (Tech Lead) | `.pi/agents/planner.md` | Przekształcenie projektu technicznego w sekwencyjny, przyrostowy plan zadań deweloperskich (`docs/do_zrobienia.md`) zintegrowany z testami pytest. |
-| **`designer`** (UX Designer) | `.pi/agents/designer.md` | Projektowanie i implementacja interfejsu czatu (layout 3-kolumnowy, ekran logowania, lista kanałów, okno czatu, lista online, style CSS) na bazie `docs/product/design_ux/`. |
-| **`dev`** (Software Developer) | `.pi/agents/dev.md` | Implementacja kodu backendu (Python/FastAPI, WebSockets, SQLite), frontendu (Vanilla JS) oraz testów automatycznych pytest krok po kroku według planu. |
+| Rola | Plik Agenta | Plik Skilla | Wywołanie Agenta | Wywołanie Skilla | Główna rola i odpowiedzialność |
+| --- | --- | --- | --- | --- | --- |
+| **`pm`** (Product Manager) | `.pi/agents/pm.md` | `.pi/skills/pm/SKILL.md` | `@pm` | `/skill:pm` | Wizja komunikatora, User Stories, kryteria akceptacji (`docs/produkt.md`). |
+| **`architekt`** (Solution Architect) | `.pi/agents/architekt.md` | `.pi/skills/architekt/SKILL.md` | `@architekt` | `/skill:architekt` | Projekt techniczny full-stack, protokół WebSocket, schemat SQLite, DRY i SOLID. |
+| **`planner`** (Tech Lead) | `.pi/agents/planner.md` | `.pi/skills/planner/SKILL.md` | `@planner` | `/skill:planner` | Przyrostowy plan zadań deweloperskich (`docs/do_zrobienia.md`), instrukcje testów pytest. |
+| **`designer`** (UX Designer) | `.pi/agents/designer.md` | `.pi/skills/designer/SKILL.md` | `@designer` | `/skill:designer` | Interfejs czatu (layout 3-kolumnowy, logowanie, style CSS) na bazie `docs/product/design_ux/`. |
+| **`dev`** (Software Developer) | `.pi/agents/dev.md` | `.pi/skills/dev/SKILL.md` | `@dev` | `/skill:dev` | Kod backendu (FastAPI/SQLite), frontendu (Vanilla JS) oraz testy `pytest`. |
 
 ---
 

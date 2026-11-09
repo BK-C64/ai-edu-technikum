@@ -60,17 +60,19 @@ Dla maksymalnej prostoty wdrożenia w pracowni szkolnej (np. na komputerach z sy
 
 ---
 
-## 4. Zespół Subagentów AI i Ich Role
+## 4. Zespół Subagentów AI i Skilli (Dwa Tryby Pracy)
 
-Podczas pracy korzystamy z wyspecjalizowanych subagentów AI (zdefiniowanych w `.pi/agents/` i opisanych w [`agents.md`](agents.md)):
+W projekcie możemy pracować z rolami inżynierskimi na dwa sposoby:
+1. **Jako autonomiczny Subagent (`@nazwa`)**: uruchamiany w tle dla większych, wielokrokowych zadań wymagających niezależnego wykonania.
+2. **Jako Skill in-line (`/skill:nazwa`)**: aktywowany bezpośrednio w głównym wątku czatu dla szybkich odpowiedzi, wspólnego kodowania i iteracyjnych dyskusji z nauczycielem.
 
-| Agent | Wywołanie w pi | Rola w projekcie MyDiscord |
-| --- | --- | --- |
-| **Product Manager** | `@pm` | Definiuje **CO** tworzymy: User Stories, kryteria akceptacji, mechaniki czatu i zakres kolejnych etapów szkolenia (`docs/produkt.md`). |
-| **Solution Architect** | `@architekt` | Projektuje **JAK** to działa: specyfikacja zdarzeń WebSocket, relacje bazy SQLite, struktura modułów FastAPI i Vanilla JS, zasady DRY i SOLID. |
-| **Tech Lead** | `@planner` | Rozbija architekturę na przyrostowy, sekwencyjny plan wdrożeniowy (`docs/do_zrobienia.md`), krok po kroku z instrukcjami testowania pytest. |
-| **UX Designer** | `@designer` | Przygotowuje i adaptuje szablony HTML5/CSS3 na bazie makiet z `docs/product/design_ux/`. |
-| **Software Developer** | `@dev` | Implementuje kod backendu (FastAPI, WebSockets, baza danych), klienta (Vanilla JS) oraz testy jednostkowe i integracyjne zgodnie z wytycznymi. |
+| Rola | Wywołanie Agenta (Tło) | Wywołanie Skilla (In-line) | Odpowiedzialność w projekcie MyDiscord |
+| --- | --- | --- | --- |
+| **Product Manager** | `@pm` | `/skill:pm` | Definiuje **CO** tworzymy: User Stories, kryteria akceptacji, mechaniki czatu (`docs/produkt.md`). |
+| **Solution Architect** | `@architekt` | `/skill:architekt` | Projektuje **JAK** to działa: specyfikacja zdarzeń WebSocket, relacje SQLite, zasady DRY/SOLID. |
+| **Tech Lead** | `@planner` | `/skill:planner` | Rozbija architekturę na przyrostowy plan wdrożeniowy (`docs/do_zrobienia.md`), instrukcje testów. |
+| **UX Designer** | `@designer` | `/skill:designer` | Przygotowuje i adaptuje szablony HTML5/CSS3 na bazie makiet z `docs/product/design_ux/`. |
+| **Software Developer** | `@dev` | `/skill:dev` | Implementuje kod backendu (FastAPI/SQLite), klienta (Vanilla JS) oraz testy `pytest`. |
 
 ---
 
