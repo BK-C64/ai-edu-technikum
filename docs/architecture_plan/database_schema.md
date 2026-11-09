@@ -9,8 +9,8 @@ Poniższy diagram przedstawia kluczowe tabele i relacje między nimi.
 ```mermaid
 erDiagram
     users {
-        TEXT id PK "UNIQUE"
-        TEXT username PK "UNIQUE"
+        TEXT id PK "UUID"
+        TEXT username "UNIQUE"
         TEXT password_hash
         TEXT created_at
     }
@@ -33,12 +33,22 @@ erDiagram
         TEXT user_id FK
         TEXT text
         TEXT created_at
+        TEXT edited_at
+    }
+
+    message_reactions {
+        TEXT message_id FK
+        TEXT user_id FK
+        TEXT emoji
+        TEXT created_at
     }
 
     users ||--o{ channel_members : "is member of"
     channels ||--o{ channel_members : "has member"
     users ||--o{ messages : "sends"
     channels ||--o{ messages : "contains"
+    messages ||--o{ message_reactions : "receives"
+    users ||--o{ message_reactions : "reacts with"
 ```
 
 ## 2. Opis Tabel

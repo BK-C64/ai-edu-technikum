@@ -57,7 +57,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
 
 ## 3. Przepływ Komunikacji (wg User Stories)
 
-### Lekcja 1-2: Pierwsze Uruchomienie i Dołączenie do Rozmowy
+### Moduły 2 & 4: Pierwsze Uruchomienie i Uwierzytelnienie (Auth)
 
 #### User Story: Logowanie
 
@@ -69,7 +69,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
       "type": "auth_request",
       "payload": {
         "username": "JanKowalski",
-        "password": "ircAMP2024!"
+        "password": "haslo_uzytkownika"
       }
     }
     ```
@@ -148,7 +148,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
 
 ---
 
-### Lekcja 3-4: Aktywny Udział w Dyskusji
+### Moduły 5 & 6: Aktywny Udział w Dyskusji i Zarządzanie Obecnością (Presence)
 
 #### User Story: Wysyłanie i odbieranie wiadomości
 
@@ -219,7 +219,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
 
 ---
 
-### Lekcja 5-6: Nawigacja i Kontekst Rozmów
+### Moduł 7: Nawigacja i Wielokanałowość (Pokoje i DM)
 
 #### User Story: Tworzenie i przełączanie kanałów oraz rozmowy prywatne
 
@@ -285,7 +285,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
 
 ---
 
-### Lekcja 7-8: Zaawansowane Interakcje
+### Moduł 8: Interakcje Zaawansowane i Rozszerzenia
 
 #### User Story: Wskaźnik "ktoś pisze..."
 

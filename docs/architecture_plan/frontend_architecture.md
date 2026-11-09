@@ -1,85 +1,169 @@
-# Architektura Aplikacji Frontendowej (Wersja Prototypowa)
+# Architektura Aplikacji Frontendowej (MyDiscord Client)
 
-Ten dokument opisuje uproszczoną architekturę klienta IRC, dostosowaną do aktualnych możliwości serwera (jeden wspólny kanał, dwuetapowe logowanie).
+Dokument ten opisuje strukturę i organizację kodu po stronie klienta (frontend) komunikatora **MyDiscord**, opartego na czystym HTML5, CSS3 i Vanilla JavaScript (ES6+), bez skomplikowanych frameworków i narzędzi do budowania.
 
-## 1. Główne Zasady
+---
 
--   **Modularność (Cel)**: Mimo prostoty, kod powinien być dzielony na logiczne części (Stan, API, UI).
--   **Single Source of Truth**: Wszystkie dane (wiadomości, użytkownicy) są przechowywane w centralnym obiekcie `state`.
--   **Vanilla JavaScript**: Brak zewnętrznych bibliotek i frameworków.
+## 1. Główne Założenia i Zasady
 
-## 2. Proponowana Struktura Plików
+- **Brak Narzędzi Build (No Bundler)**: Aplikacja działa bezpośrednio w przeglądarce, serwowana jako pliki statyczne przez FastAPI (`StaticFiles`).
+- **Modułowość i Czytelność**: Logika podzielona jest na przejrzyste warstwy: zarządzanie stanem (State), obsługa sieci WebSocket (API/Network) oraz manipulacja drzewem DOM (UI).
+- **Single Source of Truth**: Wszystkie dane (aktywny kanał, lista kanałów, historia wiadomości per kanał, lista obecności) przechowywane są w jednym centralnym obiekcie stanu (`state`).
+- **Architektura Czystego JavaScriptu (Vanilla JS)**: Bezpośrednie korzystanie z natywnego API przeglądarki (`WebSocket`, `document.querySelector`, `addEventListener`).
+
+---
+
+## 2. Struktura Katalogów i Plików Frontendu
+
+Docelowa struktura w katalogu `frontend/`:
 
 ```
-project/client/
-├── index.html          # Struktura (Login, Chat, Lista Użytkowników)
-├── style.css           # Wygląd (układ 2-kolumnowy)
+frontend/
+├── index.html          # Główny szablon (ekran logowania + trójkolumnowy kontener czatu)
+├── style.css           # Ciemny motyw w stylu Discorda (Grid/Flexbox)
 └── js/
-    ├── state.js        # Obiekt przechowujący historię i listę osób
-    ├── api.js          # Obsługa WebSocket (auth_password, auth_username)
-    ├── ui.js           # Funkcje renderujące (appendMessage, updateUserList)
-    └── main.js         # Inicjalizacja i obsługa zdarzeń
+    ├── state.js        # Centralny obiekt stanu aplikacji
+    ├── api.js          # Klient WebSocket (połączenie, wysyłanie ramek JSON, obsługa zdarzeń)
+    ├── ui.js           # Renderowanie komponentów DOM (kanały, wiadomości, obecność)
+    └── app.js          # Punkt wejścia (inicjalizacja, nasłuchiwanie zdarzeń DOM)
 ```
-
-## 3. Zarządzanie Stanem (`state.js`)
-
-W wersji prototypowej stan jest ograniczony do:
--   `currentUser`: Nazwa zalogowanego użytkownika (string).
--   `messages`: Tablica obiektów `{username, text, timestamp}`.
--   `onlineUsers`: Tablica nazw użytkowników (string[]).
--   `isAuthenticated`: Flaga określająca postęp logowania.
+*(Uwaga dydaktyczna: W pierwszych modułach warsztatowych dopuszczalne jest połączenie logiki JS w pojedynczym pliku `frontend/app.js` i późniejsze rozbicie na moduły `js/*`).*
 
 ---
 
-## 4. Przepływ Danych (Data Flow)
+## 3. Centralne Zarządzanie Stanem (`state.js`)
 
-### Logowanie (Dwuetapowe)
-1.  **User**: Wpisuje hasło i nick -> Klik `Połącz`.
-2.  **api.js**: Otwiera WebSocket.
-3.  **api.js**: Po `onopen` wysyła `{type: "auth_password", ...}`.
-4.  **api.js**: Następnie wysyła `{type: "auth_username", ...}`.
-5.  **api.js**: Odbiera `chat_history` i `user_list` -> Aktualizuje `state.js`.
-6.  **ui.js**: Ukrywa ekran logowania, pokazuje czat.
+Obiekt stanu przechowuje reaktywne dane sesji użytkownika:
 
-### Wysyłanie Wiadomości
-1.  **User**: Wpisuje tekst -> Enter.
-2.  **api.js**: Wysyła `{type: "new_message", payload: {text: "..."}}`.
-3.  **Server**: Rozsyła `new_message` do wszystkich.
-4.  **api.js (u wszystkich)**: Odbiera wiadomość -> Dodaje do `state.messages`.
-5.  **ui.js**: Renderuje nową wiadomość w oknie czatu.
+```javascript
+export const state = {
+  // Dane zalogowanego użytkownika
+  currentUser: null,       // { id: "user_...", name: "JanKowalski" }
+  isAuthenticated: false,
+
+  // Kontekst aktywnego widoku
+  currentChannelId: "general",
+
+  // Kolekcje danych
+  channels: [],            // [ { id: "general", name: "Ogólny", type: "public" }, ... ]
+  onlineUsers: [],         // [ { id: "user_...", name: "JanKowalski" }, ... ]
+  
+  // Wiadomości indeksowane po channel_id: { "general": [...], "random": [...] }
+  messagesByChannel: {},
+
+  // Użytkownicy aktualnie piszący na poszczególnych kanałach: { "general": Set("Anna") }
+  typingUsersByChannel: {}
+};
+```
 
 ---
 
-## 5. Układ Interfejsu (Layout)
+## 4. Przepływy Danych (Data Flow)
 
-Aktualny układ to uproszczona wersja 2-kolumnowa:
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    IRC Client Header                    │
-├───────────────────────────────────────┬─────────────────┤
-│                                       │                 │
-│             Chat Window               │    User List    │
-│       (Historia wiadomości)           │    (Online)     │
-│                                       │                 │
-│───────────────────────────────────────┤                 │
-│        Message Input Field            │                 │
-└───────────────────────────────────────┴─────────────────┘
-```
-
-### Kluczowe Funkcje UI:
--   `showLoginScreen() / hideLoginScreen()`: Przełączanie widoczności między formularzem a czatem.
--   `appendMessage(user, text, time)`: Dodawanie nowej bańki wiadomości.
--   `updateUserList(users)`: Odświeżanie listy osób online po każdej zmianie.
--   `renderHistory(messages)`: Wyświetlenie starych wiadomości po zalogowaniu.
+### 4.1. Jednoetapowe Logowanie i Inicjalizacja Stanu
+1. **Użytkownik**: Wpisuje nazwę użytkownika oraz hasło w formularzu logowania -> klika *„Dołącz do czatu”*.
+2. **`api.js`**:
+   - Inicjalizuje połączenie: `new WebSocket("ws://localhost:8000/ws")`.
+   - W zdarzeniu `onopen` wysyła ramkę autoryzacyjną:
+     ```json
+     {
+       "type": "auth_request",
+       "payload": {
+         "username": "JanKowalski",
+         "password": "haslo"
+       }
+     }
+     ```
+3. **Serwer**:
+   - Przy sukcesie odsyła ramkę `auth_success` z profilem użytkownika, listą kanałów, użytkowników online oraz historią kanału `#general`.
+4. **`app.js` / `ui.js`**:
+   - Aktualizuje `state.currentUser`, `state.channels`, `state.onlineUsers`, `state.messagesByChannel["general"]`.
+   - Ukrywa formularz logowania (`#login-screen`), odsłania interfejs komunikatora (`#app-wrapper`).
+   - Renderuje listę kanałów, użytkowników online oraz wiadomości z domyślnego pokoju.
+5. **Obsługa Błędu**: Jeśli serwer odeśle `auth_failure`, `ui.js` wyświetla komunikat błędu na ekranie logowania i zamyka gniazdo.
 
 ---
 
-## 6. Obsługa Zdarzeń WebSocket
+### 4.2. Wysyłanie i Odbieranie Wiadomości (Czas Rzeczywisty)
+1. **Użytkownik**: Wpisuje tekst wiadomości w oknie aktywnego kanału -> naciska `Enter` lub klika przycisk wysyłki.
+2. **`api.js`**: Wysyła do serwera ramkę:
+   ```json
+   {
+     "type": "send_message",
+     "payload": {
+       "channel_id": state.currentChannelId,
+       "text": "Cześć wszystkim!"
+     }
+   }
+   ```
+3. **Serwer**: Waliduje, zapisuje wiadomość w SQLite z `id: "msg_..."` i rozgłasza do klientów ramkę S2C `new_message`.
+4. **`api.js` (u wszystkich odbiorców)**:
+   - Dodaje wiadomość do `state.messagesByChannel[payload.channel_id]`.
+   - Jeśli odebrana wiadomość dotyczy aktualnie otwartego kanału (`state.currentChannelId`), `ui.js` dokłada element wiadomości do kontenera DOM i wykonuje auto-scroll na sam dół.
 
-Moduł `api.js` musi reagować na następujące typy wiadomości:
--   `chat_history`: Inicjalizacja okna czatu.
--   `user_list`: Aktualizacja bocznego panelu.
--   `new_message`: Nowa treść od kogoś.
--   `user_joined` / `user_left`: Powiadomienia systemowe na czacie.
--   `auth_error` / `error`: Wyświetlanie błędów w statusie.
+---
+
+### 4.3. Przełączanie Kanałów i Pobieranie Historii
+1. **Użytkownik**: Klika inny kanał na liście (np. `#random`).
+2. **`ui.js`**: Oznacza kanał jako aktywny w menu, aktualizuje `state.currentChannelId` i czyści okno czatu.
+3. **`api.js`**:
+   - Jeśli historia dla tego kanału nie była jeszcze załadowana w `state`, wysyła do serwera:
+     ```json
+     {
+       "type": "request_history",
+       "payload": { "channel_id": "random" }
+     }
+     ```
+4. **Serwer**: Odsyła `chat_history`.
+5. **`ui.js`**: Zapisuje historię w `state` i renderuje wiadomości w oknie rozmowy.
+
+---
+
+## 5. Układ Interfejsu (Trójkolumnowy Discord Layout)
+
+Interfejs zorganizowany jest w klasyczny trójkolumnowy układ z elastycznym pozycjonowaniem (CSS Grid / Flexbox):
+
+```
+┌─────────────────┬──────────────────────────────────────────┬─────────────────┐
+│ LEWY PANEL      │          ŚRODEK: OKNO CZATU              │ PRAWY PANEL     │
+│ (Kanały i DM)   │                                          │ (Obecność)      │
+├─────────────────┼──────────────────────────────────────────┼─────────────────┤
+│ • Nazwa serwera │ • Nagłówek kanału (#general)             │ • Użytkownicy   │
+│ • Kanały (#...) │ • Lista wiadomości (scrollable):         │   online        │
+│   [+ Nowy kanał]│   - Autor, data (HH:MM), treść           │   - JanKowalski │
+│ • Wiadomości    │   - Reakcje emoji i akcje wiadomości     │   - AnnaNowak   │
+│   prywatne (DM) │ • Wskaźnik pisania ("Anna pisze...")     │                 │
+│                 │──────────────────────────────────────────│                 │
+│ • Profil usera  │ • Pole tekstowe [Napisz wiadomość...]    │                 │
+└─────────────────┴──────────────────────────────────────────┴─────────────────┘
+```
+
+### Kluczowe Komponenty i Funkcje UI:
+- `toggleView(isLoggedIn)`: Płynne przełączanie między ekranem wejściowym a głównym panelem komunikatora.
+- `renderChannels(channels, activeId)`: Generowanie listy kanałów publicznych i prywatnych.
+- `renderMessages(messages)`: Generowanie klocków wiadomości z rozróżnieniem wiadomości własnych i obcych.
+- `renderUserList(users)`: Dynamiczna aktualizacja listy obecności online.
+- `showTypingIndicator(user)` / `hideTypingIndicator()`: Prezentacja animacji pisania wiadomości.
+
+---
+
+## 6. Słownik Zdarzeń WebSocket w Kliencie
+
+| Typ Zdarzenia | Kierunek | Rola w Aplikacji Klienta |
+| --- | --- | --- |
+| `auth_request` | C2S | Przesłanie nicka i hasła do serwera. |
+| `auth_success` | S2C | Potwierdzenie logowania, załadowanie stanu początkowego, przejście do czatu. |
+| `auth_failure` | S2C | Wyświetlenie komunikatu o błędzie logowania (zły nick/hasło). |
+| `send_message` | C2S | Wysłanie nowej wiadomości na aktywny kanał. |
+| `new_message` | S2C | Odebranie nowej wiadomości i dodanie jej do widoku. |
+| `request_history` | C2S | Zapytanie o historię wiadomości przy przełączeniu kanału. |
+| `chat_history` | S2C | Otrzymanie historii wiadomości dla wybranego pokoju. |
+| `create_channel` | C2S | Żądanie utworzenia nowego kanału publicznego. |
+| `channel_created` | S2C | Powiadomienie o utworzeniu kanału i dodanie go do lewego paska. |
+| `user_joined` / `user_left` | S2C | Powiadomienie o wejściu/wyjściu użytkownika. |
+| `user_list_update` | S2C | Pełna synchronizacja listy użytkowników online. |
+| `typing_started` / `user_is_typing` | C2S / S2C | Przesłanie i obsługa powiadomienia o pisaniu na żywo. |
+| `start_private_chat` / `private_chat_started` | C2S / S2C | Inicjalizacja rozmowy 1-na-1 (Direct Message). |
+| `toggle_reaction` / `message_reactions_update` | C2S / S2C | *(Rozszerzenie)* Dodanie/usunięcie reakcji emoji pod wiadomością. |
+| `edit_message` / `message_updated` | C2S / S2C | *(Rozszerzenie)* Edycja treści wiadomości przez autora. |
+| `delete_message` / `message_deleted` | C2S / S2C | *(Rozszerzenie)* Usunięcie wiadomości przez autora. |

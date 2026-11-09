@@ -31,7 +31,7 @@ Plik ten przedstawia całościowy stan zadań do wykonania w projekcie komunikat
 
 ## Faza 2: Baza Danych SQLite i Operacje CRUD (Moduł 1)
 - [ ] Moduł bazy danych `backend/database.py` (zarządzanie połączeniem `chat.db`)
-- [ ] Inicjalizacja tabel SQLite (`users`, `channels`, `messages`, `channel_members`)
+- [ ] Inicjalizacja tabel SQLite (`users`, `channels`, `messages`, `channel_members`, `message_reactions`)
 - [ ] Skrypt / funkcja seedująca domyślny kanał publiczny `#general`
 - [ ] Funkcje pomocnicze: tworzenie użytkownika, haszowanie i weryfikacja haseł
 - [ ] Testy automatyczne bazy danych w `tests/test_database.py`
@@ -90,10 +90,14 @@ Plik ten przedstawia całościowy stan zadań do wykonania w projekcie komunikat
 
 ---
 
-## Faza 9: Zaawansowane Interakcje (Moduł 8)
+## Faza 9: Zaawansowane Interakcje i Rozszerzenia (Moduł 8)
 - [ ] Wskaźnik pisania na żywo: C2S `typing_started` -> S2C `user_is_typing` z automatycznym ukrywaniem w UI po 3-4 s
 - [ ] Prywatne rozmowy 1-na-1 (DM): C2S `start_private_chat` -> S2C `private_chat_started`
+- [ ] Reakcje emoji: C2S `toggle_reaction` -> zapis w `message_reactions` -> rozgłaszanie S2C `message_reactions_update`
+- [ ] Edycja i usuwanie wiadomości: C2S `edit_message` -> S2C `message_updated`, C2S `delete_message` -> S2C `message_deleted` (z weryfikacją autorstwa)
+- [ ] Wyszukiwanie użytkowników: C2S `search_users` -> zapytanie do bazy -> S2C `search_results`
 - [ ] Test automatyczny poufności wiadomości prywatnych w `tests/test_direct_messages.py`
+- [ ] Testy automatyczne reakcji, edycji i uprawnień w `tests/test_reactions_and_edits.py`
 
 ---
 

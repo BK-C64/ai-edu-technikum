@@ -5,7 +5,7 @@ Plik ten rejestruje **wyłącznie faktycznie wykonane i zweryfikowane** prace w 
 ---
 
 ## 1. Analiza i Wymagania Produktowe
-- [x] Zebranie materiałów i założeń dydaktycznych pod kątem szkolenia nauczycieli w architekturze klient-serwer (`docs/product/teacher_corner/`, `docs/product/design_ux/`).
+- [x] Zebranie materiałów i założeń dydaktycznych pod kątem szkolenia nauczycieli w architekturze klient-serwer (`docs/produkt.md`, `docs/product/design_ux/`).
 - [x] Opracowanie zrestrukturyzowanego planu Full-Stack na 10 modułów (od pustego katalogu, przez scaffolding backendu, SQLite i testy, po klienta i DM) w `docs/produkt.md`.
 
 ## 2. Architektura i Kontrakty Techniczne

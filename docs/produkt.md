@@ -14,7 +14,7 @@ Poniższy plan przeznaczony jest do nauki budowy nowoczesnej aplikacji webowej w
 - **Moduł 5: Dwukierunkowa komunikacja w czasie rzeczywistym (Wysyłanie i Broadcast)**
 - **Moduł 6: Zarządzanie obecnością (Presence: dołączenia, wyjścia, lista online)**
 - **Moduł 7: Wielokanałowość – tworzenie i przełączanie kanałów**
-- **Moduł 8: Interakcje zaawansowane (Typing indicator, rozmowy prywatne DM)**
+- **Moduł 8: Interakcje zaawansowane i rozszerzenia (Typing indicator, DM, reakcje emoji, edycja i wyszukiwanie)**
 - **Moduł 9: Dobre praktyki dydaktyczne, przegląd kodu i wdrożenie**
 
 ---
@@ -41,7 +41,8 @@ Poniższy plan przeznaczony jest do nauki budowy nowoczesnej aplikacji webowej w
     - Tabela `users` (`id`, `username`, `password_hash`, `created_at`),
     - Tabela `channels` (`id`, `name`, `type`, `created_at`),
     - Tabela `messages` (`id`, `channel_id`, `user_id`, `text`, `created_at`, `edited_at`),
-    - Tabela `channel_members` (`user_id`, `channel_id`).
+    - Tabela `channel_members` (`user_id`, `channel_id`),
+    - Tabela `message_reactions` (`message_id`, `user_id`, `emoji`, `created_at`).
   - Funkcja seedująca domyślny kanał `#general`.
   - Bezpieczne haszowanie haseł (np. SHA-256 z solą lub `bcrypt`/`hashlib`).
 - **Weryfikacja i testy:**
@@ -155,9 +156,9 @@ Poniższy plan przeznaczony jest do nauki budowy nowoczesnej aplikacji webowej w
 
 ---
 
-### Moduł 8: Interakcje zaawansowane (Typing indicator, rozmowy prywatne DM)
+### Moduł 8: Interakcje zaawansowane i rozszerzenia (Typing indicator, DM, reakcje emoji, edycja i wyszukiwanie)
 
-- **Cel edukacyjny:** Przesyłanie zdarzeń efemerycznych (nietrwałych) w czasie rzeczywistym oraz obsługa prywatnych kanałów komunikacji 1-na-1.
+- **Cel edukacyjny:** Przesyłanie zdarzeń efemerycznych (nietrwałych) w czasie rzeczywistym, obsługa prywatnych kanałów komunikacji 1-na-1 oraz implementacja bogatych interakcji społecznościowych (reakcje emoji, edycja/usuwanie wiadomości, filtrowanie danych).
 - **Zakres backend & frontend:**
   - **Wskaźnik pisania:**
     - C2S `typing_started` z `channel_id`.
@@ -167,11 +168,25 @@ Poniższy plan przeznaczony jest do nauki budowy nowoczesnej aplikacji webowej w
     - Kliknięcie w nick na liście użytkowników online -> wysłanie C2S `start_private_chat`.
     - Serwer wyszukuje lub tworzy wirtualny kanał `dm_user1_user2` i odsyła S2C `private_chat_started`.
     - Wiadomości na kanale DM docierają wyłącznie do dwóch zainteresowanych osób.
+  - **Reakcje Emoji:**
+    - C2S `toggle_reaction` z `message_id` oraz `emoji` (np. 👍, ❤️, 🔥).
+    - Serwer dodaje lub usuwa wpis w tabeli `message_reactions` i rozgłasza S2C `message_reactions_update` z pełnym stanem reakcji.
+    - Frontend renderuje kafelki reakcji i licznik pod daną wiadomością.
+  - **Edycja i usuwanie wiadomości:**
+    - C2S `edit_message` (`message_id`, `new_text`): serwer weryfikuje autorstwo, aktualizuje treść i pole `edited_at`, rozsyła S2C `message_updated`.
+    - C2S `delete_message` (`message_id`): serwer weryfikuje autorstwo, usuwa rekord i rozsyła S2C `message_deleted`.
+    - Frontend aktualizuje lub usuwa element wiadomości w oknie rozmowy.
+  - **Wyszukiwarka użytkowników:**
+    - C2S `search_users` z polem `query`: serwer przeszukuje bazę zarejestrowanych kont i odsyła S2C `search_results`.
+    - Frontend dynamicznie filtruje listę kontaktów nad prawym panelem.
 - **User Stories:**
   - *Jako rozmówca chcę widzieć informację "ktoś pisze...", abym wiedział, że za chwilę otrzymam odpowiedź.*
   - *Jako użytkownik chcę kliknąć na konkretną osobę i prowadzić z nią poufną rozmowę 1-na-1.*
+  - *Jako użytkownik chcę zareagować emoji na wiadomość kolegi, aby wyrazić emocje bez pisania nowego posta.*
+  - *Jako autor chcę móc poprawić literówkę lub usunąć omyłkowo wysłaną wiadomość.*
 - **Weryfikacja i testy:**
   - Test `tests/test_direct_messages.py`: upewnienie się, że wiadomości prywatne pomiędzy Użytkownikiem A i B nie wyciekają do Użytkownika C.
+  - Test `tests/test_reactions_and_edits.py`: weryfikacja dodawania reakcji, uprawnień do edycji (tylko autor może edytować swój wpis) oraz poprawnego usuwania wiadomości.
 
 ---
 

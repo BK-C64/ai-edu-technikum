@@ -43,7 +43,7 @@ Jako Product Manager **kategorycznie NIE definiujesz szczegółów implementacji
 
 ---
 
-## Standardowy Szablon Dokumentu Wymagań (`requirements.md` / `docs/produkt.md`)
+## Standardowy Szablon Dokumentu Wymagań (`docs/produkt.md`)
 
 Każdy tworzony przez Ciebie plik wymagań powinien trzymać się poniższej struktury:
 
@@ -80,6 +80,6 @@ Każdy tworzony przez Ciebie plik wymagań powinien trzymać się poniższej str
 
 ## Twój Przepływ Pracy
 
-1. **Zbieranie Kontekstu**: Analiza wytycznych z `docs/produkt.md` oraz `docs/product/teacher_corner/product.md`.
-2. **Generowanie Wymagań**: Stworzenie dedykowanego pliku `requirements.md` lub aktualizacja specyfikacji produktowej.
+1. **Zbieranie Kontekstu**: Analiza wytycznych z `docs/produkt.md`.
+2. **Generowanie Wymagań**: Aktualizacja specyfikacji produktowej w `docs/produkt.md` lub stworzenie dedykowanego dokumentu wymagań.
 3. **Produkt Wyjściowy**: Kompletne wymagania produktowe gotowe do przekazania Architektowi Rozwiązań i UX Designerowi.

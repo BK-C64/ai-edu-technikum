@@ -17,11 +17,10 @@ Głównym projektem realizowanym w repozytorium jest edukacyjny komunikator inte
 W procesie wytwarzania oprogramowania uczestniczy dedykowany zespół wyspecjalizowanych subagentów (zdefiniowanych w katalogu `.pi/agents/`). Każdy agent odpowiada za inną fazę projektu, symulując role w profesjonalnym zespole produktowo-inżynieryjnym:
 
 | Subagent | Plik definicji | Główna rola i odpowiedzialność |
-| Agent | Plik definicji | Rola i odpowiedzialność |
 | --- | --- | --- |
-| **`pm`** (Product Manager) | `.pi/agents/pm.md` | Definiowanie wizji komunikatora, User Stories, kryteriów akceptacji, logiki kanałów i uprawnień (`docs/produkt.md`, `docs/product/teacher_corner/product.md`, `requirements.md`). |
+| **`pm`** (Product Manager) | `.pi/agents/pm.md` | Definiowanie wizji komunikatora, User Stories, kryteriów akceptacji, logiki kanałów i uprawnień (`docs/produkt.md`). |
 | **`architekt`** (Solution Architect) | `.pi/agents/architekt.md` | Opracowanie projektu technicznego full-stack (`docs/architecture_plan/basic_choices.md`, `api_design.md`, `database_schema.md`), protokołu WebSocket (JSON C2S/S2C), podziału na moduły backendu (FastAPI) i klienta (Vanilla JS) z poszanowaniem zasad DRY i SOLID. |
-| **`planner`** (Tech Lead) | `.pi/agents/planner.md` | Przekształcenie projektu technicznego w sekwencyjny, przyrostowy plan zadań deweloperskich (`tasks.md` / `IMPLEMENTATION_PLAN.md`) zintegrowany z testami pytest. |
+| **`planner`** (Tech Lead) | `.pi/agents/planner.md` | Przekształcenie projektu technicznego w sekwencyjny, przyrostowy plan zadań deweloperskich (`docs/do_zrobienia.md`) zintegrowany z testami pytest. |
 | **`designer`** (UX Designer) | `.pi/agents/designer.md` | Projektowanie i implementacja interfejsu czatu (layout 3-kolumnowy, ekran logowania, lista kanałów, okno czatu, lista online, style CSS) na bazie `docs/product/design_ux/`. |
 | **`dev`** (Software Developer) | `.pi/agents/dev.md` | Implementacja kodu backendu (Python/FastAPI, WebSockets, SQLite), frontendu (Vanilla JS) oraz testów automatycznych pytest krok po kroku według planu. |
 
@@ -35,14 +34,14 @@ Współpraca z agentami w środowisku szkoleniowym dla nauczycieli opiera się n
 [ Wizja / Wymagania Komunikatora (docs/produkt.md) ]
                                │
                                ▼
-1. pm ─────────────────────────► requirements.md / PRD (User Stories, reguły biznesowe)
+1. pm ─────────────────────────► docs/produkt.md (User Stories, reguły biznesowe)
                                │
                                ▼
-2. architekt ──────────────────► architecture.md (kontrakty WebSocket, schemat SQLite, moduły)
+2. architekt ──────────────────► architecture_plan/ (kontrakty WebSocket, schemat SQLite, moduły)
                                │
         ┌──────────────────────┴───────────────────────┐
         ▼                                              ▼
-3. planner ────────────────► tasks.md          4. designer ──────► layout HTML5 + style.css
+3. planner ────────────────► docs/do_zrobienia.md  4. designer ──────► layout HTML5 + style.css
         │                                              │          (na bazie design_ux/)
         └──────────────────────┬───────────────────────┘
                                ▼
@@ -93,6 +92,5 @@ Projekt korzysta z dwóch centralnych rejestrów stanu realizacji:
    - `docs/zrobione.md` – bieżący rejestr faktycznie ukończonych zadań,
    - `docs/do_zrobienia.md` – całościowa lista zadań TODO,
    - `docs/produkt.md` – główny plan rozwoju Full-Stack z podziałem na User Stories i kryteria akceptacji,
-   - `docs/product/teacher_corner/product.md` – rozszerzona specyfikacja produktowa i User Stories komunikatora,
    - `docs/product/design_ux/` – gotowe makiety HTML/CSS (ekran logowania `login.html`, widok czatu `channel_view.html`),
    - `docs/architecture_plan/` – szczegółowy projekt architektury, bazy danych i API WebSocket.

@@ -36,7 +36,7 @@ Jesteś Tech Leadem projektu komunikatora internetowego **MyDiscord** (opartego 
    - Zapoznaj się z planem w `docs/produkt.md` oraz makietami w `docs/product/design_ux/`.
 
 2. **Planowanie Zadań**:
-   - Stwórz lub zaktualizuj plik zadań `tasks.md` / `IMPLEMENTATION_PLAN.md`.
+   - Stwórz lub zaktualizuj plik zadań `docs/do_zrobienia.md` (lub `tasks.md`).
    - Podziel plan na moduły z checklistami (`- [ ]`).
    - Do każdego modułu przypisz komendę testową (`pytest tests/test_....py`).
 

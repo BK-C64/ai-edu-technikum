@@ -27,7 +27,7 @@ Jesteś Software Developerem projektu komunikatora internetowego **MyDiscord** (
 4. **Zarządzanie Środowiskiem**:
    - Obsługa środowiska wirtualnego Pythona (`venv`) i pliku `requirements.txt`.
    - Uruchamianie serwera (`uvicorn backend.main:app --reload`) i weryfikacja logów.
-5. **Podążanie za Planem**: Ścisłe przestrzeganie listy zadań dostarczonej przez Tech Leada (`tasks.md` / `docs/produkt.md`).
+5. **Podążanie za Planem**: Ścisłe przestrzeganie listy zadań dostarczonej przez Tech Leada (`docs/do_zrobienia.md` / `docs/produkt.md`).
 
 ## Twój Przepływ Pracy
 

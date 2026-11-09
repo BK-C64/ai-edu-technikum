@@ -29,7 +29,6 @@ Projekt posiada przygotowaną bazę analityczną i rejestr postępów w katalogu
   - [`docs/do_zrobienia.md`](docs/do_zrobienia.md) – całościowa lista zadań TODO projektu (od scaffoldingu backendu po klienta i testy).
 - **Opis Produktowy i Historyjki Użytkownika:**
   - [`docs/produkt.md`](docs/produkt.md) – główna specyfikacja funkcjonalna i plan rozwoju Full-Stack z podziałem na User Stories i kryteria akceptacji.
-  - [`docs/product/teacher_corner/product.md`](docs/product/teacher_corner/product.md) – rozszerzona specyfikacja modułów (użytkownicy, kanały, personalizacja, wdrożenie).
 - **Makiety i Design UX (HTML / CSS):**
   - [`docs/product/design_ux/login.html`](docs/product/design_ux/login.html) & [`docs/product/design_ux/login.css`](docs/product/design_ux/login.css) – ekran logowania i autoryzacji.
   - [`docs/product/design_ux/channel_view.html`](docs/product/design_ux/channel_view.html) & [`docs/product/design_ux/style.css`](docs/product/design_ux/style.css) – główny widok komunikatora w układzie trójkolumnowym.
@@ -38,8 +37,6 @@ Projekt posiada przygotowaną bazę analityczną i rejestr postępów w katalogu
   - [`docs/architecture_plan/api_design.md`](docs/architecture_plan/api_design.md) – precyzyjny kontrakt WebSocket (formaty JSON C2S i S2C).
   - [`docs/architecture_plan/database_schema.md`](docs/architecture_plan/database_schema.md) – schemat bazy SQLite (tabele `users`, `channels`, `messages`, `channel_members`).
   - [`docs/architecture_plan/frontend_architecture.md`](docs/architecture_plan/frontend_architecture.md) – architektura modułowa w Vanilla JS.
-- **Materiały dla Nauczyciela:**
-  - [`docs/product/teacher_corner/`](docs/product/teacher_corner/) – scenariusze zajęć, warianty standardowe i turbo.
 
 ---
 
@@ -71,7 +68,7 @@ Podczas pracy korzystamy z wyspecjalizowanych subagentów AI (zdefiniowanych w `
 | --- | --- | --- |
 | **Product Manager** | `@pm` | Definiuje **CO** tworzymy: User Stories, kryteria akceptacji, mechaniki czatu i zakres kolejnych etapów szkolenia (`docs/produkt.md`). |
 | **Solution Architect** | `@architekt` | Projektuje **JAK** to działa: specyfikacja zdarzeń WebSocket, relacje bazy SQLite, struktura modułów FastAPI i Vanilla JS, zasady DRY i SOLID. |
-| **Tech Lead** | `@planner` | Rozbija architekturę na przyrostowy, sekwencyjny plan wdrożeniowy (`tasks.md`), krok po kroku z instrukcjami testowania pytest. |
+| **Tech Lead** | `@planner` | Rozbija architekturę na przyrostowy, sekwencyjny plan wdrożeniowy (`docs/do_zrobienia.md`), krok po kroku z instrukcjami testowania pytest. |
 | **UX Designer** | `@designer` | Przygotowuje i adaptuje szablony HTML5/CSS3 na bazie makiet z `docs/product/design_ux/`. |
 | **Software Developer** | `@dev` | Implementuje kod backendu (FastAPI, WebSockets, baza danych), klienta (Vanilla JS) oraz testy jednostkowe i integracyjne zgodnie z wytycznymi. |
 
@@ -83,14 +80,14 @@ Podczas pracy korzystamy z wyspecjalizowanych subagentów AI (zdefiniowanych w `
 [ Wymagania i User Stories (docs/produkt.md) ]
                                │
                                ▼
-1. @pm ────────────────────────► requirements.md / moduły lekcyjne
+1. @pm ────────────────────────► docs/produkt.md (User Stories, reguły biznesowe)
                                │
                                ▼
-2. @architekt ─────────────────► architecture.md (kontrakty WebSocket, schemat SQLite)
+2. @architekt ─────────────────► architecture_plan/ (kontrakty WebSocket, schemat SQLite)
                                │
         ┌──────────────────────┴───────────────────────┐
         ▼                                              ▼
-3. @planner ───────────────► tasks.md          4. @designer ──► layout HTML5/CSS3
+3. @planner ───────────────► docs/do_zrobienia.md      4. @designer ──► layout HTML5/CSS3
         │                                              │          (z docs/product/design_ux/)
         └──────────────────────┬───────────────────────┘
                                ▼
@@ -122,7 +119,7 @@ Gdy projekt jest wdrażany, kroki uruchomienia prezentują się następująco:
 
 3. **Uruchomienie serwera aplikacji:**
    ```bash
-   uvicorn main:app --reload --port 8000
+   uvicorn backend.main:app --reload --port 8000
    ```
 
 4. **Dostęp do aplikacji:**
