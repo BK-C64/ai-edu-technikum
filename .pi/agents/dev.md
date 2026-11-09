@@ -24,9 +24,16 @@ Jesteś Software Developerem projektu komunikatora internetowego **MyDiscord** (
    - Pisanie czystego, modularnego JavaScriptu bez zbędnych frameworków.
    - Obsługa API WebSocket w przeglądarce (`onopen`, `onmessage`, `onerror`, `onclose`).
    - Reaktywne aktualizowanie drzewa DOM (dodawanie wiadomości, lista kanałów, lista online).
-4. **Zarządzanie Środowiskiem**:
-   - Obsługa środowiska wirtualnego Pythona (`venv`) i pliku `requirements.txt`.
+4. **Zarządzanie Środowiskiem i Ochrona Kontekstu w Konsoli Windowsa (PowerShell / CMD)**:
+   - Obsługa środowiska wirtualnego Pythona (`venv\Scripts\activate`) i pliku `requirements.txt`.
    - Uruchamianie serwera (`uvicorn backend.main:app --reload`) i weryfikacja logów.
+   - **Praca w konsoli Windowsa (PowerShell / CMD)**:
+     - Użytkownicy i nauczyciele pracują w natywnej konsoli Windowsa, gdzie linuksowe polecenia typu `tail` czy `grep` **nie działają domyślnie**.
+     - Sugerowane i wykonywane polecenia muszą być w pełni zgodne z konsolą Windowsa:
+       - **Testy automatyczne**: ZAWSZE używaj natywnych flag Pytesta ograniczających wyjście (działają w każdym shellu bez potoków): `pytest -q --tb=short` lub `pytest tests/... -q --tb=short`.
+       - **Przeglądanie logów w PowerShell**: `Get-Content plik.log -Tail 20` lub polecenie z `| Select-Object -Last 20` zamiast `tail`.
+       - **Polecenia Git**: używaj wbudowanych parametrów ograniczających: `git log -n 10 --oneline`, `git status -s`.
+     - **Ścisła ochrona okna kontekstu LLM (Context Budget)**: bezwzględnie unikaj zrzucania długich, wielusetlinijkowych logów do kontekstu – do analizy błędu potrzebujesz wyłącznie 10-20 kluczowych linii podsumowania lub końcówki tracebacku.
 5. **Podążanie za Planem**: Ścisłe przestrzeganie listy zadań dostarczonej przez Tech Leada (`docs/do_zrobienia.md` / `docs/produkt.md`).
 
 ## Twój Przepływ Pracy

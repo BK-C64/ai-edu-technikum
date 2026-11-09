@@ -80,6 +80,14 @@ Projekt korzysta z dwóch centralnych rejestrów stanu realizacji:
 ### Obowiązki Agentów wobec rejestru postępów:
 - Każdy agent kończący swoje zadanie ma obowiązek zweryfikować rezultat, zaktualizować status w `docs/do_zrobienia.md` (zmienić `[ ]` na `[x]`) oraz dopisać ukończony element do `docs/zrobione.md`.
 
+### Zasada Ochrony Kontekstu w Konsoli Windowsa (PowerShell / CMD):
+- Środowisko pracy nauczycieli to **natywna konsola Windowsa (PowerShell / CMD)**, w której polecenia linuksowe (takie jak `tail` czy `grep`) **nie działają domyślnie**.
+- Polecenia sugerowane użytkownikom oraz wywoływane przez agentów muszą być kompatybilne z Windowsem i zoptymalizowane pod kątem ochrony okna kontekstu (Context Budget):
+  - **Dla testów `pytest`**: ZAWSZE używaj natywnych flag: `pytest -q --tb=short` (działa bez potoków w CMD i PowerShellu, zwraca tylko zwięzłe podsumowanie i linie błędu).
+  - **Dla czytania końcówek logów w PowerShellu**: `Get-Content plik.log -Tail 20` lub potok `| Select-Object -Last 20` (zamiast linuksowego `tail`).
+  - **Dla Gita**: wbudowane flagi ograniczające, np. `git log -n 10 --oneline`, `git status -s`.
+- Bezwzględny zakaz wklejania do kontekstu pełnych, wielosetlinijkowych zrzutów całego terminala.
+
 ---
 
 ## 6. Jak Korzystać ze Środowiska (Szkolenie Nauczycieli)
