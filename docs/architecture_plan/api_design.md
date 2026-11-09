@@ -38,6 +38,11 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
     -   **Format:** Krótki, czytelny identyfikator. Dla rozmów prywatnych może być złożeniem ID dwóch użytkowników.
     -   **Przykład:** `"general"`, `"dm_user1_user2"`
 
+-   **`message.id`**
+    -   **Typ:** `String`
+    -   **Format:** Unikalny identyfikator wiadomości generowany przez serwer (np. UUID lub prefiks z timestampem).
+    -   **Przykład:** `"msg_1a2b3c-4d5e"`
+
 -   **`message.text`**
     -   **Typ:** `String`
     -   **Ograniczenia:** Nie może być pusty. Maksymalna długość to 300 znaków.
@@ -85,8 +90,8 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
         "initial_channel_history": {
           "channel_id": "general",
           "messages": [
-            { "user": { "id": "user456", "name": "AnnaNowak" }, "text": "Cześć wszystkim!", "timestamp": "2025-09-28T10:00:00Z" },
-            { "user": { "id": "user123", "name": "JanKowalski" }, "text": "Hej!", "timestamp": "2025-09-28T10:01:00Z" }
+            { "id": "msg_001", "user": { "id": "user456", "name": "AnnaNowak" }, "text": "Cześć wszystkim!", "timestamp": "2025-09-28T10:00:00Z" },
+            { "id": "msg_002", "user": { "id": "user123", "name": "JanKowalski" }, "text": "Hej!", "timestamp": "2025-09-28T10:01:00Z" }
           ]
         }
       }
@@ -103,6 +108,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
     ```
 
 -   **Założenia:**
+    -   **Rejestracja i logowanie:** Model uproszczony (auto-rejestracja) – jeśli użytkownik o podanym `username` nie istnieje w bazie SQLite, serwer tworzy nowe konto i haszuje przekazane hasło. Jeśli użytkownik istnieje, serwer weryfikuje podane hasło z hashem. Jeśli użytkownik o tym nicku jest aktualnie połączony (sesja aktywna), serwer zwraca `auth_failure` z powodem `"Nickname already in use."`.
     -   Serwer zawsze wysyła historię dla domyślnego, głównego kanału (np. "general").
     -   Lista `online_users` zawiera wszystkich użytkowników połączonych z serwerem, niezależnie od kanału.
     -   Jeśli uwierzytelnianie się nie powiedzie, połączenie WebSocket jest zamykane przez serwer.
@@ -128,8 +134,8 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
       "payload": {
         "channel_id": "general",
         "messages": [
-          { "user": { "id": "user456", "name": "AnnaNowak" }, "text": "Cześć wszystkim!", "timestamp": "2025-09-28T10:00:00Z" },
-          { "user": { "id": "user123", "name": "JanKowalski" }, "text": "Hej!", "timestamp": "2025-09-28T10:01:00Z" }
+          { "id": "msg_001", "user": { "id": "user456", "name": "AnnaNowak" }, "text": "Cześć wszystkim!", "timestamp": "2025-09-28T10:00:00Z" },
+          { "id": "msg_002", "user": { "id": "user123", "name": "JanKowalski" }, "text": "Hej!", "timestamp": "2025-09-28T10:01:00Z" }
         ]
       }
     }
@@ -165,6 +171,7 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
       "payload": {
         "channel_id": "general",
         "message": {
+          "id": "msg_003",
           "user": { "id": "user123", "name": "JanKowalski" },
           "text": "Jak mija dzień?",
           "timestamp": "2025-09-28T10:05:00Z"
@@ -214,7 +221,37 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
 
 ### Lekcja 5-6: Nawigacja i Kontekst Rozmów
 
-#### User Story: Przełączanie kanałów i rozmowy prywatne
+#### User Story: Tworzenie i przełączanie kanałów oraz rozmowy prywatne
+
+> **Jako użytkownik,** chcę mieć możliwość stworzenia nowego kanału tematycznego, przełączania się między kanałami oraz rozpoczynania rozmów prywatnych.
+
+-   **(C2S) `create_channel`**: Klient wysyła prośbę o utworzenie nowego kanału publicznego.
+    ```json
+    {
+      "type": "create_channel",
+      "payload": {
+        "name": "nauka-pythona"
+      }
+    }
+    ```
+-   **(S2C) `channel_created`**: Serwer tworzy kanał w bazie danych i rozgłasza informację do wszystkich podłączonych klientów.
+    ```json
+    {
+      "type": "channel_created",
+      "payload": {
+        "channel": {
+          "id": "nauka-pythona",
+          "name": "nauka-pythona",
+          "type": "public"
+        }
+      }
+    }
+    ```
+
+-   **Założenia:**
+    -   Nazwa kanału musi mieć od 2 do 30 znaków, bez spacji (zamieniane na myślniki) i być unikalna.
+    -   Po utworzeniu kanału serwer powiadamia wszystkich użytkowników komunikatem `channel_created`, aby nowy kanał pojawił się na ich listach kanałów.
+
 
 > **Jako użytkownik,** chcę przełączać się między kanałami i rozpoczynać rozmowy prywatne.
 
@@ -415,6 +452,28 @@ Aby zapewnić spójność i uniknąć błędów, poniżej zdefiniowano formaty i
       }
     }
     ```
+
+---
+
+## 3.1. Endpointy HTTP REST (Backend FastAPI)
+
+Poza protokołem WebSocket serwer FastAPI udostępnia kluczowe endpointy HTTP:
+
+1. **`GET /health`**
+   - **Cel:** Diagnostyka i automatyczne testy integracyjne serwera.
+   - **Odpowiedź (200 OK):**
+     ```json
+     {
+       "status": "ok",
+       "app": "MyDiscord Server",
+       "version": "1.0.0"
+     }
+     ```
+
+2. **`GET /` oraz pliki statyczne (`/static/...`)**
+   - **Cel:** Serwowanie frontendu (HTML, CSS, JS) bezpośrednio przez FastAPI za pomocą `fastapi.staticfiles.StaticFiles`.
+   - `GET /` serwuje główny plik aplikacji (`index.html` / `channel_view.html`).
+
 
 ---
 

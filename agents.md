@@ -1,85 +1,98 @@
-# Środowisko Wieloagentowe: AI Edu Technikum
+# Środowisko Wieloagentowe: AI Edu – Projekt Komunikatora "MyDiscord"
 
 ## 1. Cel Repozytorium
 
-Niniejsze repozytorium służy do celów edukacyjnych dla **uczniów i nauczycieli**. Stanowi **wieloagentowe środowisko (multi-agent environment)** do eksperymentowania z nowoczesnymi technologiami programowania, architekturą aplikacji oraz procesem wytwarzania oprogramowania przy asyście sztucznej inteligencji.
+Niniejsze repozytorium służy do celów edukacyjnych dla **nauczycieli** (oraz ich uczniów). Stanowi **wieloagentowe środowisko (multi-agent environment)** do eksperymentowania z nowoczesnymi technologiami programowania aplikacji webowych w czasie rzeczywistym, architekturą klient-serwer oraz procesem wytwarzania oprogramowania przy asyście sztucznej inteligencji.
 
-Głównym obszarem praktycznych ćwiczeń jest projektowanie i implementacja prostych gier webowych (2D Canvas, 3D Voxel/Three.js) z wykorzystaniem środowiska **Node.js** (wbudowany moduł `http` lub minimalistyczny framework `express`), ekosystemu pakietów **npm** oraz czystego frontendu (HTML5, CSS3, JavaScript).
+Głównym projektem realizowanym w repozytorium jest edukacyjny komunikator internetowy wzorowany na Discordzie / IRC (**MyDiscord / AI-Powered Team Chat**), wykorzystujący:
+- **Backend**: Python (**FastAPI** + **Uvicorn** + **WebSockets**),
+- **Baza danych**: lekka, wbudowana baza **SQLite**,
+- **Frontend**: czysty **HTML5, CSS3 i Vanilla JavaScript** (bez skomplikowanych bundlerów i frameworków),
+- **Makiety UX**: gotowy design trójkolumnowy w `docs/product/design_ux/`.
 
 ---
 
 ## 2. Architektura Ról Subagentów
 
-W procesie wytwarzania oprogramowania uczestniczy dedykowany zespół wyspecjalizowanych subagentów (zdefiniowanych w katalogu `.pi/agents/`). Każdy agent odpowiada za inną fazę projektu, symulując role w profesjonalnym zespole IT:
+W procesie wytwarzania oprogramowania uczestniczy dedykowany zespół wyspecjalizowanych subagentów (zdefiniowanych w katalogu `.pi/agents/`). Każdy agent odpowiada za inną fazę projektu, symulując role w profesjonalnym zespole produktowo-inżynieryjnym:
 
 | Subagent | Plik definicji | Główna rola i odpowiedzialność |
+| Agent | Plik definicji | Rola i odpowiedzialność |
 | --- | --- | --- |
-| **Product Manager** | `.pi/agents/product-manager-pl.md` | Definiowanie wizji gry, mechanik rozgrywki, zasad, pętli gry (game loop), User Stories i kryteriów akceptacji (`requirements.md`). |
-| **Solution Architect** | `.pi/agents/solution-architect-pl.md` | Opracowanie projektu technicznego full-stack (`architecture.md` / `design.md`), dobór pakietów npm, architektura serwera Node.js i klienta gry. |
-| **Tech Lead** | `.pi/agents/tech-lead-task-planner-pl.md` | Przekształcenie projektu technicznego w sekwencyjny, przyrostowy plan zadań deweloperskich (`tasks.md` / `IMPLEMENTATION_PLAN.md`). |
-| **UX Designer** | `.pi/agents/ux-designer-pl.md` | Tworzenie makiet wizualnych interfejsu gry (Game UI, nakładki HUD, menu startowe, ekran Game Over) w HTML5 i CSS3. |
-| **Software Developer** | `.pi/agents/software-developer-pl.md` | Implementacja kodu serwera Node.js i klienta JavaScript, instalacja zależności npm, dbałość o płynność pętli gry (60 FPS). |
+| **`pm`** (Product Manager) | `.pi/agents/pm.md` | Definiowanie wizji komunikatora, User Stories, kryteriów akceptacji, logiki kanałów i uprawnień (`docs/produkt.md`, `docs/product/teacher_corner/product.md`, `requirements.md`). |
+| **`architekt`** (Solution Architect) | `.pi/agents/architekt.md` | Opracowanie projektu technicznego full-stack (`docs/architecture_plan/basic_choices.md`, `api_design.md`, `database_schema.md`), protokołu WebSocket (JSON C2S/S2C), podziału na moduły backendu (FastAPI) i klienta (Vanilla JS) z poszanowaniem zasad DRY i SOLID. |
+| **`planner`** (Tech Lead) | `.pi/agents/planner.md` | Przekształcenie projektu technicznego w sekwencyjny, przyrostowy plan zadań deweloperskich (`tasks.md` / `IMPLEMENTATION_PLAN.md`) zintegrowany z testami pytest. |
+| **`designer`** (UX Designer) | `.pi/agents/designer.md` | Projektowanie i implementacja interfejsu czatu (layout 3-kolumnowy, ekran logowania, lista kanałów, okno czatu, lista online, style CSS) na bazie `docs/product/design_ux/`. |
+| **`dev`** (Software Developer) | `.pi/agents/dev.md` | Implementacja kodu backendu (Python/FastAPI, WebSockets, SQLite), frontendu (Vanilla JS) oraz testów automatycznych pytest krok po kroku według planu. |
 
 ---
 
 ## 3. Typowy Przepływ Pracy (Workflow)
 
-Współpraca z agentami w środowisku edukacyjnym opiera się na iteracyjnym procesie kaskadowo-zwinnym:
+Współpraca z agentami w środowisku szkoleniowym dla nauczycieli opiera się na iteracyjnym procesie kaskadowo-zwinnym:
 
 ```text
-[ Pomysł / Temat Gry ]
-         │
-         ▼
-1. Product Manager ─────────► requirements.md (wymagania, mechaniki, User Stories)
-         │
-         ▼
-2. Solution Architect ──────► architecture.md (architektura Node.js + Canvas/WebGL, pakiety npm)
-         │
-         ├──────────────────────────────┐
-         ▼                              ▼
-3. Tech Lead ──────────────► tasks.md   4. UX Designer ──► index.html + style.css (szablon UI/HUD)
-         │                              │
-         └──────────────┬───────────────┘
-                        ▼
-5. Software Developer ─────► Implementacja kodu Node.js & JS (realizacja krok po kroku)
-                        │
-                        ▼
-               Weryfikacja i Testy (npm start -> http://localhost:3000)
+[ Wizja / Wymagania Komunikatora (docs/produkt.md) ]
+                               │
+                               ▼
+1. pm ─────────────────────────► requirements.md / PRD (User Stories, reguły biznesowe)
+                               │
+                               ▼
+2. architekt ──────────────────► architecture.md (kontrakty WebSocket, schemat SQLite, moduły)
+                               │
+        ┌──────────────────────┴───────────────────────┐
+        ▼                                              ▼
+3. planner ────────────────► tasks.md          4. designer ──────► layout HTML5 + style.css
+        │                                              │          (na bazie design_ux/)
+        └──────────────────────┬───────────────────────┘
+                               ▼
+5. dev ────────────────────────► Implementacja kodu Python (FastAPI) & JS (WebSocket client) + testy
+                               │
+                               ▼
+                      Weryfikacja i Testy (pytest & Uvicorn -> http://localhost:8000)
 ```
 
 ---
 
 ## 4. Wykorzystywany Stos Technologiczny
 
-Dla zachowania prostoty, czytelności i wysokiej wartości dydaktycznej projekty opierają się na minimalistycznym, ale nowoczesnym stacku:
+Dla zachowania przejrzystości dydaktycznej i bezproblemowego uruchomienia w pracowniach komputerowych projekt opiera się na stosie pozbawionym skomplikowanego toolingu:
 
 - **Backend / Serwer**:
-  - **Node.js**: środowisko uruchomieniowe backendu.
-  - **Serwer HTTP**: wbudowany w Node.js moduł `http` lub prosty framework `express` do serwowania plików gry i obsługi endpointów.
-  - **Zarządzanie zależnościami**: `package.json` oraz pakiety z rejestru **npm** (np. `ws` / `socket.io` do komunikacji sieciowej, silniki matematyczne, narzędzia pomocnicze).
+  - **Python 3.10+**: środowisko backendowe,
+  - **FastAPI**: nowoczesny framework asynchroniczny z natywną obsługą WebSockets oraz automatyczną dokumentacją OpenAPI/Swagger,
+  - **Uvicorn**: lekki serwer ASGI,
+  - **SQLite**: plikowa baza danych wbudowana w Pythona (`sqlite3`), nie wymaga instalacji serwera bazodanowego.
 - **Frontend / Klient**:
-  - **HTML5**: struktura gry, kontener elementu `<canvas>`.
-  - **CSS3**: stylizacja interfejsu gracza (HUD, ekrany menu, responsywność).
-  - **JavaScript (ES6+)**: logika klienta, obsługa wejścia (InputHandler), pętla renderowania (Game Loop).
-  - **Grafika**: Canvas 2D API lub WebGL (np. Three.js).
+  - **HTML5**: semantyczny układ aplikacji (sidebar z kanałami, widok wiadomości, panel użytkowników online),
+  - **CSS3**: nowoczesny ciemny motyw wzorowany na Discordzie (`docs/product/design_ux/style.css`, `login.css`),
+  - **Vanilla JavaScript (ES6+)**: modułowa obsługa połączenia WebSocket, kolejkowanie wiadomości, manipulacja drzewem DOM.
+- **Format komunikacji**:
+  - Zdarzenia WebSocket w formacie JSON ze stałą strukturą `{ type: string, payload: object }` (zgodnie z `docs/architecture_plan/api_design.md`).
 
 ---
 
-## 5. Jak Korzystać ze Środowiska (Dla Uczniów i Nauczycieli)
+## 5. Śledzenie Postępów Projektu (`docs/zrobione.md` i `docs/do_zrobienia.md`)
+
+Projekt korzysta z dwóch centralnych rejestrów stanu realizacji:
+- **`docs/zrobione.md`**: rejestruje **wyłącznie faktycznie wykonane i zweryfikowane** prace (aktualizowany na bieżąco przez agentów po ukończeniu kroków). Na ten moment zawiera wstępny plan API oraz propozycję architektury.
+- **`docs/do_zrobienia.md`**: prosta, całościowa lista zadań (TODO) obejmująca wszystkie fazy od scaffoldingu backendu po klienta i wdrożenie.
+
+### Obowiązki Agentów wobec rejestru postępów:
+- Każdy agent kończący swoje zadanie ma obowiązek zweryfikować rezultat, zaktualizować status w `docs/do_zrobienia.md` (zmienić `[ ]` na `[x]`) oraz dopisać ukończony element do `docs/zrobione.md`.
+
+---
+
+## 6. Jak Korzystać ze Środowiska (Szkolenie Nauczycieli)
 
 1. **Uruchamianie agentów**:
-   Subagenci mogą być wywoływani przez system pi jako wyspecjalizowane agenty (np. `product-manager-pl`, `software-developer-pl`), realizując konkretne etapy projektu.
-2. **Eksperymentowanie z rolami**:
-   Uczniowie mogą wcielać się w rolę wybranego agenta (np. pisać wymagania jako Product Manager) i prosić AI o realizację kolejnych ról (np. Architekta czy Developera) lub odwrotnie — weryfikować i recenzować plany generowane przez agentów.
-3. **Instalacja i uruchamianie gier**:
-   Każdy projekt gry zawiera plik `package.json`:
-
-   ```bash
-   # Instalacja zależności zadeklarowanych w projekcie
-   npm install
-
-   # Uruchomienie serwera gry
-   npm start
-   ```
-
-   Aplikacja otwiera się lokalnie w przeglądarce pod adresem wskazanym przez serwer (zazwyczaj `http://localhost:3000`).
+   Subagenci mogą być wywoływani przez system pi jako zwięźle nazwane role: `@pm`, `@architekt`, `@planner`, `@designer`, `@dev`, pomagając nauczycielom w projektowaniu lekcji i budowaniu aplikacji.
+2. **Eksperymentowanie z rolami inżynierskimi**:
+   Nauczyciele poznają proces wytwarzania nowoczesnego oprogramowania od analizy wymagań po wdrożenie, ucząc się jak tłumaczyć te role i koncepcje uczniom.
+3. **Materiały bazowe w projekcie**:
+   - `docs/zrobione.md` – bieżący rejestr faktycznie ukończonych zadań,
+   - `docs/do_zrobienia.md` – całościowa lista zadań TODO,
+   - `docs/produkt.md` – główny plan rozwoju Full-Stack z podziałem na User Stories i kryteria akceptacji,
+   - `docs/product/teacher_corner/product.md` – rozszerzona specyfikacja produktowa i User Stories komunikatora,
+   - `docs/product/design_ux/` – gotowe makiety HTML/CSS (ekran logowania `login.html`, widok czatu `channel_view.html`),
+   - `docs/architecture_plan/` – szczegółowy projekt architektury, bazy danych i API WebSocket.
