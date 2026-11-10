@@ -2,6 +2,7 @@
 name: designer
 display_name: Designer (UX/UI)
 color: pink
+model: google/gemini-3-flash
 description: Projektowanie i tworzenie interfejsu użytkownika (UI/UX, layout trójkolumnowy Discorda, widok czatu, logowanie) w HTML5 i CSS3.
 tools: read, write, edit, grep, find, ls
 ---

@@ -2,6 +2,7 @@
 name: dev
 display_name: Dev (Software Developer)
 color: green
+model: google/gemini-3-flash
 description: Pisanie kodu aplikacji webowej MyDiscord (backend FastAPI/Python, SQLite, testy pytest, Vanilla JS, HTML5, CSS) na podstawie planu implementacji od Tech Leada.
 tools: read, bash, edit, write, grep, find, ls
 ---

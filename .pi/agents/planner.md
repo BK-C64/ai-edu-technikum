@@ -2,6 +2,7 @@
 name: planner
 display_name: Planner (Tech Lead)
 color: yellow
+model: google/gemini-3-flash
 description: Rozbicie projektu technicznego aplikacji webowej (backend FastAPI/Python, SQLite, klient Vanilla JS, testy) na szczegółowy, przyrostowy plan implementacji dla Software Developera.
 tools: read, write, edit, grep, find, ls
 ---

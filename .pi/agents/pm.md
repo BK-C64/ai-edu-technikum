@@ -2,6 +2,7 @@
 name: pm
 display_name: PM (Product Manager)
 color: blue
+model: google/gemini-3-flash
 description: Definiowanie i dopracowywanie wymagań produktowych, User Stories i kryteriów akceptacji dla aplikacji webowych (komunikator internetowy MyDiscord).
 tools: read, write, edit, grep, find, ls
 ---

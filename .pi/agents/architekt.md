@@ -2,6 +2,7 @@
 name: architekt
 display_name: Architekt (Solution Architect)
 color: purple
+model: google/gemini-3-flash
 description: Tworzenie projektu architektonicznego aplikacji webowych (FastAPI/Python, WebSockets, SQLite, Vanilla JS, kontrakty API, schematy baz danych, DRY i SOLID).
 tools: read, write, edit, grep, find, ls
 ---
